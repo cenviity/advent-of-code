@@ -1,4 +1,5 @@
 import pathlib
+from string import digits
 import sys
 
 
@@ -7,7 +8,15 @@ def parse_input(puzzle_input):
 
 
 def solve_part1(data):
-    pass
+    calibration_values = []
+
+    for line in data:
+        digits_only = list(filter(lambda char: char in digits, line))
+        first_digit, last_digit = digits_only[0], digits_only[-1]
+        calibration_value = int(first_digit + last_digit)
+        calibration_values.append(calibration_value)
+
+    return sum(calibration_values)
 
 
 def solve_part2(data):
