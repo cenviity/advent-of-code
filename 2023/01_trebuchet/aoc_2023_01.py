@@ -1,6 +1,6 @@
 import pathlib
-from string import digits
 import sys
+from string import digits
 
 
 def parse_input(puzzle_input):
