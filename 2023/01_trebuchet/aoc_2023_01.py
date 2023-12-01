@@ -8,15 +8,17 @@ def parse_input(puzzle_input):
 
 
 def solve_part1(data):
-    calibration_values = []
-
-    for line in data:
-        digits_only = list(filter(lambda char: char in digits, line))
-        first_digit, last_digit = digits_only[0], digits_only[-1]
-        calibration_value = int(first_digit + last_digit)
-        calibration_values.append(calibration_value)
+    calibration_values = [find_first_and_last_digits(line) for line in data]
 
     return sum(calibration_values)
+
+
+def find_first_and_last_digits(line):
+    digits_only = list(filter(lambda char: char in digits, line))
+    first_digit, last_digit = digits_only[0], digits_only[-1]
+    calibration_value = int(first_digit + last_digit)
+
+    return calibration_value
 
 
 def solve_part2(data):
