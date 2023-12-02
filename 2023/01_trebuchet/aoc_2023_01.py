@@ -1,6 +1,6 @@
 import pathlib
+import string
 import sys
-from string import digits
 
 
 def parse_input(puzzle_input):
@@ -22,7 +22,7 @@ def find_first_and_last_digits(line):
 
 
 def is_digit(char):
-    return char in digits
+    return char in string.digits
 
 
 def solve_part2(data):
