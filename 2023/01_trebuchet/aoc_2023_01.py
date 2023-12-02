@@ -71,9 +71,7 @@ def find_first_digit(line):
         if number_word[1] in line
     ]
 
-    combined_indices = number_word_indices + digit_indices
-
-    sorted_combined_indices = sorted(combined_indices, key=lambda pair: pair[1])
+    sorted_combined_indices = sort_all_numbers_found(number_word_indices, digit_indices)
 
     return sorted_combined_indices[0][0]
 
@@ -93,9 +91,7 @@ def find_last_digit(line):
         if number_word[1] in line
     ]
 
-    combined_indices = number_word_indices + digit_indices
-
-    sorted_combined_indices = sorted(combined_indices, key=lambda pair: pair[1])
+    sorted_combined_indices = sort_all_numbers_found(number_word_indices, digit_indices)
 
     return sorted_combined_indices[-1][0]
 
@@ -107,6 +103,12 @@ def replace_number_word_with_digit(number_word_indices):
                 number_word_indices[i][0].replace(*r),
                 number_word_indices[i][1],
             )
+
+
+def sort_all_numbers_found(number_word_indices, digit_indices):
+    combined_indices = number_word_indices + digit_indices
+
+    return sorted(combined_indices, key=lambda pair: pair[1])
 
 
 def solve_day(puzzle_input):
