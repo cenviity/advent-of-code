@@ -14,11 +14,15 @@ def solve_part1(data):
 
 
 def find_first_and_last_digits(line):
-    digits_only = list(filter(lambda char: char in digits, line))
+    digits_only = list(filter(lambda char: is_digit(char), line))
     first_digit, last_digit = digits_only[0], digits_only[-1]
     calibration_value = int(first_digit + last_digit)
 
     return calibration_value
+
+
+def is_digit(char):
+    return char in digits
 
 
 def solve_part2(data):
