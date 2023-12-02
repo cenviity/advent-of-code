@@ -47,7 +47,15 @@ def find_first_and_last_digits_with_numeric_words(line):
     ]
 
     # Implement `find` for first_digit
+    first_digit = find_first_digit(line, number_words)
 
+    # Implement `rfind` instead for last_digit
+    last_digit = find_last_digit(line, number_words)
+
+    return int(first_digit + last_digit)
+
+
+def find_first_digit(line, number_words):
     number_word_indices = [
         (number_word[0], line.find(number_word[0]))
         for number_word in number_words
@@ -72,9 +80,10 @@ def find_first_and_last_digits_with_numeric_words(line):
     sorted_combined_indices = sorted(combined_indices, key=lambda pair: pair[1])
 
     first_digit = sorted_combined_indices[0][0]
+    return first_digit
 
-    # Implement `rfind` instead for last_digit
 
+def find_last_digit(line, number_words):
     number_word_indices = [
         (number_word[0], line.rfind(number_word[0]))
         for number_word in number_words
@@ -99,8 +108,7 @@ def find_first_and_last_digits_with_numeric_words(line):
     sorted_combined_indices = sorted(combined_indices, key=lambda pair: pair[1])
 
     last_digit = sorted_combined_indices[-1][0]
-
-    return int(first_digit + last_digit)
+    return last_digit
 
 
 def solve_day(puzzle_input):
