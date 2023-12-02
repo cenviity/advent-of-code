@@ -75,8 +75,7 @@ def find_first_digit(line):
 
     sorted_combined_indices = sorted(combined_indices, key=lambda pair: pair[1])
 
-    first_digit = sorted_combined_indices[0][0]
-    return first_digit
+    return sorted_combined_indices[0][0]
 
 
 def find_last_digit(line):
@@ -98,8 +97,7 @@ def find_last_digit(line):
 
     sorted_combined_indices = sorted(combined_indices, key=lambda pair: pair[1])
 
-    last_digit = sorted_combined_indices[-1][0]
-    return last_digit
+    return sorted_combined_indices[-1][0]
 
 
 def replace_number_word_with_digit(number_word_indices):
