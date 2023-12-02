@@ -1,3 +1,4 @@
+from os import replace
 import pathlib
 import string
 import sys
@@ -62,12 +63,7 @@ def find_first_digit(line):
         if number_word[0] in line
     ]
 
-    for i, number_word_index in enumerate(number_word_indices):
-        for r in NUMBER_WORDS:
-            number_word_indices[i] = (
-                number_word_indices[i][0].replace(*r),
-                number_word_indices[i][1],
-            )
+    replace_number_word_with_digit(number_word_indices)
 
     digit_indices = [
         (number_word[1], line.find(number_word[1]))
@@ -90,12 +86,7 @@ def find_last_digit(line):
         if number_word[0] in line
     ]
 
-    for i, number_word_index in enumerate(number_word_indices):
-        for r in NUMBER_WORDS:
-            number_word_indices[i] = (
-                number_word_indices[i][0].replace(*r),
-                number_word_indices[i][1],
-            )
+    replace_number_word_with_digit(number_word_indices)
 
     digit_indices = [
         (number_word[1], line.rfind(number_word[1]))
@@ -109,6 +100,15 @@ def find_last_digit(line):
 
     last_digit = sorted_combined_indices[-1][0]
     return last_digit
+
+
+def replace_number_word_with_digit(number_word_indices):
+    for i, number_word_index in enumerate(number_word_indices):
+        for r in NUMBER_WORDS:
+            number_word_indices[i] = (
+                number_word_indices[i][0].replace(*r),
+                number_word_indices[i][1],
+            )
 
 
 def solve_day(puzzle_input):
