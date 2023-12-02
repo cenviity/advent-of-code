@@ -103,7 +103,7 @@ def find_last_digit(line):
 
 
 def replace_number_word_with_digit(number_word_indices):
-    for i, number_word_index in enumerate(number_word_indices):
+    for i, _ in enumerate(number_word_indices):
         for r in NUMBER_WORDS:
             number_word_indices[i] = (
                 number_word_indices[i][0].replace(*r),
