@@ -2,6 +2,18 @@ import pathlib
 import string
 import sys
 
+NUMBER_WORDS = [
+    ("one", "1"),
+    ("two", "2"),
+    ("three", "3"),
+    ("four", "4"),
+    ("five", "5"),
+    ("six", "6"),
+    ("seven", "7"),
+    ("eight", "8"),
+    ("nine", "9"),
+]
+
 
 def parse_input(puzzle_input):
     return puzzle_input.splitlines()
@@ -34,36 +46,24 @@ def solve_part2(data):
 
 
 def find_first_and_last_digits_with_numeric_words(line):
-    number_words = [
-        ("one", "1"),
-        ("two", "2"),
-        ("three", "3"),
-        ("four", "4"),
-        ("five", "5"),
-        ("six", "6"),
-        ("seven", "7"),
-        ("eight", "8"),
-        ("nine", "9"),
-    ]
-
     # Implement `find` for first_digit
-    first_digit = find_first_digit(line, number_words)
+    first_digit = find_first_digit(line)
 
     # Implement `rfind` instead for last_digit
-    last_digit = find_last_digit(line, number_words)
+    last_digit = find_last_digit(line)
 
     return int(first_digit + last_digit)
 
 
-def find_first_digit(line, number_words):
+def find_first_digit(line):
     number_word_indices = [
         (number_word[0], line.find(number_word[0]))
-        for number_word in number_words
+        for number_word in NUMBER_WORDS
         if number_word[0] in line
     ]
 
     for i, number_word_index in enumerate(number_word_indices):
-        for r in number_words:
+        for r in NUMBER_WORDS:
             number_word_indices[i] = (
                 number_word_indices[i][0].replace(*r),
                 number_word_indices[i][1],
@@ -71,7 +71,7 @@ def find_first_digit(line, number_words):
 
     digit_indices = [
         (number_word[1], line.find(number_word[1]))
-        for number_word in number_words
+        for number_word in NUMBER_WORDS
         if number_word[1] in line
     ]
 
@@ -83,15 +83,15 @@ def find_first_digit(line, number_words):
     return first_digit
 
 
-def find_last_digit(line, number_words):
+def find_last_digit(line):
     number_word_indices = [
         (number_word[0], line.rfind(number_word[0]))
-        for number_word in number_words
+        for number_word in NUMBER_WORDS
         if number_word[0] in line
     ]
 
     for i, number_word_index in enumerate(number_word_indices):
-        for r in number_words:
+        for r in NUMBER_WORDS:
             number_word_indices[i] = (
                 number_word_indices[i][0].replace(*r),
                 number_word_indices[i][1],
@@ -99,7 +99,7 @@ def find_last_digit(line, number_words):
 
     digit_indices = [
         (number_word[1], line.rfind(number_word[1]))
-        for number_word in number_words
+        for number_word in NUMBER_WORDS
         if number_word[1] in line
     ]
 
