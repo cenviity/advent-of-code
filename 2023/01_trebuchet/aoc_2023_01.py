@@ -14,7 +14,7 @@ def solve_part1(data):
 
 
 def find_first_and_last_digits(line):
-    digits_only = list(filter(lambda char: is_digit(char), line))
+    digits_only = [char for char in line if is_digit(char)]
     first_digit, last_digit = digits_only[0], digits_only[-1]
     calibration_value = int(first_digit + last_digit)
 
