@@ -3,7 +3,38 @@ import sys
 
 
 def parse_input(puzzle_input):
-    pass
+    lines = puzzle_input.splitlines()
+
+    return [process_line(line) for line in lines]
+
+
+def process_line(line):
+    game_label, all_cube_draws = line.split(": ")
+    game_number = int(game_label.removeprefix("Game "))
+    cube_draws = all_cube_draws.split("; ")
+    processed_cube_draws = list(map(process_cube_draw, cube_draws))
+
+    return game_number, processed_cube_draws
+
+
+def process_cube_draw(cube_draw):
+    cube_sets = cube_draw.split(", ")
+
+    processed_cube_draw = {}
+
+    for cube_set in cube_sets:
+        cube_count, cube_colour = cube_set.split(" ")
+        processed_cube_draw |= {cube_colour: int(cube_count)}
+
+    return convert_dict_to_tuple(processed_cube_draw)
+
+
+def convert_dict_to_tuple(cube_draw):
+    red_cubes = cube_draw.setdefault("red", 0)
+    green_cubes = cube_draw.setdefault("green", 0)
+    blue_cubes = cube_draw.setdefault("blue", 0)
+
+    return red_cubes, green_cubes, blue_cubes
 
 
 def solve_part1(data):
