@@ -2,7 +2,6 @@ import pathlib
 import string
 import sys
 from itertools import chain
-from os import replace
 
 NUMBER_WORDS = [
     ("one", "1"),
