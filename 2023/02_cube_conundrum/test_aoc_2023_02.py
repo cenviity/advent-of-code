@@ -17,6 +17,12 @@ def example2():
     return aoc.parse_input(puzzle_input)
 
 
+@pytest.fixture
+def actual_input():
+    puzzle_input = (PUZZLE_DIR / "input.txt").read_text().strip()
+    return aoc.parse_input(puzzle_input)
+
+
 # @pytest.mark.skip(reason="Not implemented")
 def test_parse_example1(example1):
     """Test that input is parsed properly."""
@@ -35,6 +41,12 @@ def test_part1_example1(example1):
     assert aoc.solve_part1(example1) == 8
 
 
+# @pytest.mark.skip(reason="Not implemented")
+def test_part1_solution(actual_input):
+    """Test part 1 on actual solution."""
+    assert aoc.solve_part1(actual_input) == 2256
+
+
 @pytest.mark.skip(reason="Not implemented")
 def test_part2_example1(example1):
     """Test part 2 on example input."""
@@ -45,3 +57,9 @@ def test_part2_example1(example1):
 def test_part2_example2(example2):
     """Test part 2 on example input."""
     assert aoc.solve_part2(example2) == ...
+
+
+@pytest.mark.skip(reason="Not implemented")
+def test_part2_solution(actual_input):
+    """Test part 2 on actual solution."""
+    assert aoc.solve_part2(actual_input) == ...
