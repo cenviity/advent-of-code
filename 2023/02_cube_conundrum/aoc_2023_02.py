@@ -2,6 +2,12 @@ import pathlib
 import sys
 from collections import defaultdict
 
+MAX_ALLOWED_CUBES = (
+    12,
+    13,
+    14,
+)
+
 
 def parse_input(puzzle_input):
     lines = puzzle_input.splitlines()
@@ -38,8 +44,21 @@ def convert_dict_to_tuple(cube_draw):
     return red_cubes, green_cubes, blue_cubes
 
 
-def solve_part1(data):
-    pass
+def solve_part1(games):
+    possible_game_ids = [game[0] for game in games if is_possible_game(game)]
+
+    return sum(possible_game_ids)
+
+
+def is_possible_game(game):
+    game_id, cube_sets = game
+    red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*cube_sets)
+
+    return (
+        max(red_cubes_drawn) <= MAX_ALLOWED_CUBES[0]
+        and max(green_cubes_drawn) <= MAX_ALLOWED_CUBES[1]
+        and max(blue_cubes_drawn) <= MAX_ALLOWED_CUBES[2]
+    )
 
 
 def solve_part2(data):
