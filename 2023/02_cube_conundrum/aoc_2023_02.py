@@ -61,8 +61,17 @@ def is_possible_game(game):
     )
 
 
-def solve_part2(data):
-    pass
+def solve_part2(games):
+    game_powers = [calculate_game_power(game) for game in games]
+
+    return sum(game_powers)
+
+
+def calculate_game_power(game):
+    cube_sets = game[1]
+    red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*cube_sets)
+
+    return max(red_cubes_drawn) * max(green_cubes_drawn) * max(blue_cubes_drawn)
 
 
 def solve_day(puzzle_input):
