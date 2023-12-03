@@ -1,5 +1,6 @@
 import pathlib
 import sys
+from collections import defaultdict
 
 
 def parse_input(puzzle_input):
@@ -20,19 +21,19 @@ def process_line(line):
 def process_cube_draw(cube_draw):
     cube_sets = cube_draw.split(", ")
 
-    processed_cube_draw = {}
+    processed_cube_draw = defaultdict(int)
 
     for cube_set in cube_sets:
         cube_count, cube_colour = cube_set.split(" ")
-        processed_cube_draw |= {cube_colour: int(cube_count)}
+        processed_cube_draw[cube_colour] = int(cube_count)
 
     return convert_dict_to_tuple(processed_cube_draw)
 
 
 def convert_dict_to_tuple(cube_draw):
-    red_cubes = cube_draw.setdefault("red", 0)
-    green_cubes = cube_draw.setdefault("green", 0)
-    blue_cubes = cube_draw.setdefault("blue", 0)
+    red_cubes = cube_draw["red"]
+    green_cubes = cube_draw["green"]
+    blue_cubes = cube_draw["blue"]
 
     return red_cubes, green_cubes, blue_cubes
 
