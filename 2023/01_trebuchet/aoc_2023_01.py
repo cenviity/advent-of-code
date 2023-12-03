@@ -59,7 +59,7 @@ def find_first_and_last_digits_with_numeric_words(line):
 
 def find_first_digit(line):
     unit_indices = [
-        (unit, line.find(unit))
+        (line.find(unit), unit)
         for number_word in NUMBER_WORDS
         for unit in number_word
         if unit in line
@@ -67,14 +67,14 @@ def find_first_digit(line):
 
     sorted_combined_indices = sort_all_numbers_found(unit_indices)
 
-    unit = sorted_combined_indices[0][0]
+    unit = sorted_combined_indices[0][1]
 
     return replace_number_word_with_digit(unit)
 
 
 def find_last_digit(line):
     unit_indices = [
-        (unit, line.rfind(unit))
+        (line.rfind(unit), unit)
         for number_word in NUMBER_WORDS
         for unit in number_word
         if unit in line
@@ -82,13 +82,13 @@ def find_last_digit(line):
 
     sorted_combined_indices = sort_all_numbers_found(unit_indices)
 
-    unit = sorted_combined_indices[-1][0]
+    unit = sorted_combined_indices[-1][1]
 
     return replace_number_word_with_digit(unit)
 
 
 def sort_all_numbers_found(unit_indices):
-    return sorted(unit_indices, key=lambda pair: pair[1])
+    return sorted(unit_indices)
 
 
 def replace_number_word_with_digit(unit):
