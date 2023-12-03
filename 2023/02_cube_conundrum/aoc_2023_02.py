@@ -10,16 +10,16 @@ def parse_input(puzzle_input):
 
 
 def process_line(line):
-    game_label, all_cube_draws = line.split(": ")
+    game_label, all_cube_draws = [segment.strip() for segment in line.split(":")]
     game_number = int(game_label.removeprefix("Game "))
-    cube_draws = all_cube_draws.split("; ")
+    cube_draws = [cube_draw.strip() for cube_draw in all_cube_draws.split(";")]
     processed_cube_draws = list(map(process_cube_draw, cube_draws))
 
     return game_number, processed_cube_draws
 
 
 def process_cube_draw(cube_draw):
-    cube_sets = cube_draw.split(", ")
+    cube_sets = [cube_set.strip() for cube_set in cube_draw.split(",")]
 
     processed_cube_draw = defaultdict(int)
 
