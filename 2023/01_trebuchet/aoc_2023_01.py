@@ -52,35 +52,28 @@ def find_first_and_last_digits_with_numeric_words(line):
 
     sorted_combined_indices = sorted(chain(numbers_from_left, numbers_from_right))
 
-    first_number = sorted_combined_indices[0][1]
-    last_number = sorted_combined_indices[-1][1]
-
-    first_digit = replace_number_word_with_digit(first_number)
-    last_digit = replace_number_word_with_digit(last_number)
+    first_digit = sorted_combined_indices[0][1]
+    last_digit = sorted_combined_indices[-1][1]
 
     return int(first_digit + last_digit)
 
 
 def find_numbers_from_left(line):
-    for number_word in NUMBER_WORDS:
-        for unit in number_word:
+    for number_pair in NUMBER_WORDS:
+        _, digit = number_pair
+
+        for unit in number_pair:
             if unit in line:
-                yield line.find(unit), unit
+                yield line.find(unit), digit
 
 
 def find_numbers_from_right(line):
-    for number_word in NUMBER_WORDS:
-        for unit in number_word:
+    for number_pair in NUMBER_WORDS:
+        _, digit = number_pair
+
+        for unit in number_pair:
             if unit in line:
-                yield line.rfind(unit), unit
-
-
-def replace_number_word_with_digit(unit):
-    for number_word, digit in NUMBER_WORDS:
-        if number_word == unit:
-            return digit
-
-    return unit
+                yield line.rfind(unit), digit
 
 
 def solve_day(puzzle_input):
