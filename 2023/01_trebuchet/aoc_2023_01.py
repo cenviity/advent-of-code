@@ -52,7 +52,7 @@ def find_first_and_last_digits_with_numeric_words(line):
     numbers_from_right = find_numbers_from_right(line)
 
     sorted_combined_indices = sort_all_numbers_found(
-        numbers_from_left + numbers_from_right
+        chain(numbers_from_left, numbers_from_right)
     )
 
     first_number = sorted_combined_indices[0][1]
@@ -65,21 +65,17 @@ def find_first_and_last_digits_with_numeric_words(line):
 
 
 def find_numbers_from_left(line):
-    return [
-        (line.find(unit), unit)
-        for number_word in NUMBER_WORDS
-        for unit in number_word
-        if unit in line
-    ]
+    for number_word in NUMBER_WORDS:
+        for unit in number_word:
+            if unit in line:
+                yield line.find(unit), unit
 
 
 def find_numbers_from_right(line):
-    return [
-        (line.rfind(unit), unit)
-        for number_word in NUMBER_WORDS
-        for unit in number_word
-        if unit in line
-    ]
+    for number_word in NUMBER_WORDS:
+        for unit in number_word:
+            if unit in line:
+                yield line.rfind(unit), unit
 
 
 def sort_all_numbers_found(unit_indices):
