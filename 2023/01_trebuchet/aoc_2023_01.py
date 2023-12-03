@@ -58,51 +58,41 @@ def find_first_and_last_digits_with_numeric_words(line):
 
 
 def find_first_digit(line):
-    number_word_indices = [
-        (number_word[0], line.find(number_word[0]))
+    unit_indices = [
+        (unit, line.find(unit))
         for number_word in NUMBER_WORDS
-        if number_word[0] in line
+        for unit in number_word
+        if unit in line
     ]
 
-    replace_number_word_with_digit(number_word_indices)
+    replace_number_word_with_digit(unit_indices)
 
-    digit_indices = [
-        (number_word[1], line.find(number_word[1]))
-        for number_word in NUMBER_WORDS
-        if number_word[1] in line
-    ]
-
-    sorted_combined_indices = sort_all_numbers_found(number_word_indices, digit_indices)
+    sorted_combined_indices = sort_all_numbers_found(unit_indices)
 
     return sorted_combined_indices[0][0]
 
 
 def find_last_digit(line):
-    number_word_indices = [
-        (number_word[0], line.rfind(number_word[0]))
+    unit_indices = [
+        (unit, line.rfind(unit))
         for number_word in NUMBER_WORDS
-        if number_word[0] in line
+        for unit in number_word
+        if unit in line
     ]
 
-    replace_number_word_with_digit(number_word_indices)
+    replace_number_word_with_digit(unit_indices)
 
-    digit_indices = [
-        (number_word[1], line.rfind(number_word[1]))
-        for number_word in NUMBER_WORDS
-        if number_word[1] in line
-    ]
-
-    sorted_combined_indices = sort_all_numbers_found(number_word_indices, digit_indices)
+    sorted_combined_indices = sort_all_numbers_found(unit_indices)
 
     return sorted_combined_indices[-1][0]
 
 
-def replace_number_word_with_digit(number_word_indices):
-    for i, _ in enumerate(number_word_indices):
+def replace_number_word_with_digit(unit_indices):
+    for i, _ in enumerate(unit_indices):
         for r in NUMBER_WORDS:
-            number_word_indices[i] = (
-                number_word_indices[i][0].replace(*r),
-                number_word_indices[i][1],
+            unit_indices[i] = (
+                unit_indices[i][0].replace(*r),
+                unit_indices[i][1],
             )
 
 
