@@ -48,43 +48,38 @@ def solve_part2(data):
 
 
 def find_first_and_last_digits_with_numeric_words(line):
-    # Implement `find` for first_digit
-    first_digit = find_first_digit(line)
+    numbers_from_left = find_numbers_from_left(line)
+    numbers_from_right = find_numbers_from_right(line)
 
-    # Implement `rfind` instead for last_digit
-    last_digit = find_last_digit(line)
+    sorted_combined_indices = sort_all_numbers_found(
+        numbers_from_left + numbers_from_right
+    )
+
+    first_number = sorted_combined_indices[0][1]
+    last_number = sorted_combined_indices[-1][1]
+
+    first_digit = replace_number_word_with_digit(first_number)
+    last_digit = replace_number_word_with_digit(last_number)
 
     return int(first_digit + last_digit)
 
 
-def find_first_digit(line):
-    unit_indices = [
+def find_numbers_from_left(line):
+    return [
         (line.find(unit), unit)
         for number_word in NUMBER_WORDS
         for unit in number_word
         if unit in line
     ]
 
-    sorted_combined_indices = sort_all_numbers_found(unit_indices)
 
-    unit = sorted_combined_indices[0][1]
-
-    return replace_number_word_with_digit(unit)
-
-
-def find_last_digit(line):
-    unit_indices = [
+def find_numbers_from_right(line):
+    return [
         (line.rfind(unit), unit)
         for number_word in NUMBER_WORDS
         for unit in number_word
         if unit in line
     ]
-
-    sorted_combined_indices = sort_all_numbers_found(unit_indices)
-
-    unit = sorted_combined_indices[-1][1]
-
-    return replace_number_word_with_digit(unit)
 
 
 def sort_all_numbers_found(unit_indices):
