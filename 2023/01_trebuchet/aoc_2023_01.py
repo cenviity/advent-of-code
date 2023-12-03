@@ -1,7 +1,8 @@
-from os import replace
 import pathlib
 import string
 import sys
+from itertools import chain
+from os import replace
 
 NUMBER_WORDS = [
     ("one", "1"),
@@ -105,8 +106,8 @@ def replace_number_word_with_digit(number_word_indices):
             )
 
 
-def sort_all_numbers_found(number_word_indices, digit_indices):
-    combined_indices = number_word_indices + digit_indices
+def sort_all_numbers_found(*unit_indices):
+    combined_indices = list(chain.from_iterable(unit_indices))
 
     return sorted(combined_indices, key=lambda pair: pair[1])
 
