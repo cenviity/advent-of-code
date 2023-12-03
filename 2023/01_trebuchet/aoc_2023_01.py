@@ -65,11 +65,11 @@ def find_first_digit(line):
         if unit in line
     ]
 
-    replace_number_word_with_digit(unit_indices)
-
     sorted_combined_indices = sort_all_numbers_found(unit_indices)
 
-    return sorted_combined_indices[0][0]
+    unit = sorted_combined_indices[0][0]
+
+    return replace_number_word_with_digit(unit)
 
 
 def find_last_digit(line):
@@ -80,26 +80,25 @@ def find_last_digit(line):
         if unit in line
     ]
 
-    replace_number_word_with_digit(unit_indices)
-
     sorted_combined_indices = sort_all_numbers_found(unit_indices)
 
-    return sorted_combined_indices[-1][0]
+    unit = sorted_combined_indices[-1][0]
 
-
-def replace_number_word_with_digit(unit_indices):
-    for i, _ in enumerate(unit_indices):
-        for r in NUMBER_WORDS:
-            unit_indices[i] = (
-                unit_indices[i][0].replace(*r),
-                unit_indices[i][1],
-            )
+    return replace_number_word_with_digit(unit)
 
 
 def sort_all_numbers_found(*unit_indices):
     combined_indices = list(chain.from_iterable(unit_indices))
 
     return sorted(combined_indices, key=lambda pair: pair[1])
+
+
+def replace_number_word_with_digit(unit):
+    for number_word, digit in NUMBER_WORDS:
+        if number_word == unit:
+            return digit
+
+    return unit
 
 
 def solve_day(puzzle_input):
