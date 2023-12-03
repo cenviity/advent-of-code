@@ -87,10 +87,8 @@ def find_last_digit(line):
     return replace_number_word_with_digit(unit)
 
 
-def sort_all_numbers_found(*unit_indices):
-    combined_indices = list(chain.from_iterable(unit_indices))
-
-    return sorted(combined_indices, key=lambda pair: pair[1])
+def sort_all_numbers_found(unit_indices):
+    return sorted(unit_indices, key=lambda pair: pair[1])
 
 
 def replace_number_word_with_digit(unit):
