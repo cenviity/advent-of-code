@@ -26,7 +26,7 @@ def solve_part1(engine):
 
 def get_part_numbers(engine, line_number, line):
     result = []
-    number_matches = find_number_matches(line)
+    number_matches = re.finditer(r"\d+", line)
 
     for number_match in number_matches:
         match_start_column = number_match.start()
@@ -39,10 +39,6 @@ def get_part_numbers(engine, line_number, line):
             result.append(matched_number)
 
     return result
-
-
-def find_number_matches(line):
-    return re.finditer(r"\d+", line)
 
 
 def is_adjacent_to_symbol(engine, row, start_column, end_column):
