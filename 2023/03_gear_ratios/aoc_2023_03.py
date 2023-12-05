@@ -10,21 +10,23 @@ def parse_input(puzzle_input):
 
 
 def solve_part1(engine):
-    part_numbers_by_line = (
-        get_part_numbers(engine, line_number, line)
-        for line_number, line in enumerate(engine)
-    )
-
     all_part_numbers = (
         part_number
-        for line_of_part_numbers in part_numbers_by_line
+        for line_of_part_numbers in get_part_numbers(engine)
         for part_number in line_of_part_numbers
     )
 
     return sum(all_part_numbers)
 
 
-def get_part_numbers(engine, line_number, line):
+def get_part_numbers(engine):
+    return (
+        get_part_numbers_in_line(engine, line_number, line)
+        for line_number, line in enumerate(engine)
+    )
+
+
+def get_part_numbers_in_line(engine, line_number, line):
     number_matches = re.finditer(r"\d+", line)
 
     part_numbers = (
