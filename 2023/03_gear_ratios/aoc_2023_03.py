@@ -48,7 +48,7 @@ def is_adjacent_to_symbol(engine, row, start_column, end_column):
         cells_left_and_right,
     )
 
-    return any(map(lambda cell: is_symbol(engine, cell), surrounding_cells))
+    return any(is_symbol(engine, cell) for cell in surrounding_cells)
 
 
 def is_symbol(engine, cell):
