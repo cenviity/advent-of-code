@@ -35,8 +35,8 @@ def find_number_matches(line):
 def is_adjacent_to_symbol(data, row, start_column, end_column):
     cells_above_and_below = (
         (row + row_offset, column)
-        for column in range(start_column - 1, end_column + 2)
         for row_offset in [-1, 1]
+        for column in range(start_column - 1, end_column + 2)
     )
 
     cells_left_and_right = (
