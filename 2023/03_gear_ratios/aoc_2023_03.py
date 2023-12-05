@@ -10,22 +10,29 @@ def parse_input(puzzle_input):
 
 
 def solve_part1(engine):
-    part_number_total = 0
+    part_numbers = []
 
     for line_number, line in enumerate(engine):
-        number_matches = find_number_matches(line)
+        part_numbers += get_part_numbers(engine, line_number, line)
 
-        for number_match in number_matches:
-            match_start_column = number_match.start()
-            match_end_column = number_match.end() - 1
-            matched_number = int(number_match.group())
+    return sum(part_numbers)
 
-            if is_adjacent_to_symbol(
-                engine, line_number, match_start_column, match_end_column
-            ):
-                part_number_total += matched_number
 
-    return part_number_total
+def get_part_numbers(engine, line_number, line):
+    result = []
+    number_matches = find_number_matches(line)
+
+    for number_match in number_matches:
+        match_start_column = number_match.start()
+        match_end_column = number_match.end() - 1
+        matched_number = int(number_match.group())
+
+        if is_adjacent_to_symbol(
+            engine, line_number, match_start_column, match_end_column
+        ):
+            result.append(matched_number)
+
+    return result
 
 
 def find_number_matches(line):
