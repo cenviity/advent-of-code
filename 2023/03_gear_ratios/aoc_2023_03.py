@@ -1,3 +1,4 @@
+import itertools
 import pathlib
 import re
 import string
@@ -32,11 +33,14 @@ def find_number_matches(line):
 
 
 def is_adjacent_to_symbol(data, row_number, start_column, end_column):
-    surrounding_coords = [
-        (row_number + row_offset, i)
-        for i in range(start_column - 1, end_column + 2)
-        for row_offset in [-1, 1]
-    ] + [(row_number, i) for i in [start_column - 1, end_column + 1]]
+    surrounding_coords = itertools.chain(
+        (
+            (row_number + row_offset, i)
+            for i in range(start_column - 1, end_column + 2)
+            for row_offset in [-1, 1]
+        ),
+        ((row_number, i) for i in [start_column - 1, end_column + 1]),
+    )
 
     return any(map(lambda coords: is_symbol(data, coords), surrounding_coords))
 
