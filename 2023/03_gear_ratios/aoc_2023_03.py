@@ -25,23 +25,25 @@ def solve_part1(engine):
 
 
 def get_part_numbers(engine, line_number, line):
-    result = []
     number_matches = re.finditer(r"\d+", line)
 
-    for number_match in number_matches:
-        match_start_column = number_match.start()
-        match_end_column = number_match.end() - 1
-        matched_number = int(number_match.group())
+    part_numbers = (
+        extract_number_from_match(number_match)
+        for number_match in number_matches
+        if is_adjacent_to_symbol(engine, line_number, number_match)
+    )
 
-        if is_adjacent_to_symbol(
-            engine, line_number, match_start_column, match_end_column
-        ):
-            result.append(matched_number)
-
-    return result
+    return part_numbers
 
 
-def is_adjacent_to_symbol(engine, row, start_column, end_column):
+def extract_number_from_match(number_match):
+    return int(number_match.group())
+
+
+def is_adjacent_to_symbol(engine, row, number_match):
+    start_column = number_match.start()
+    end_column = number_match.end() - 1
+
     cells_above_and_below = (
         (row + row_offset, column)
         for row_offset in [-1, 1]
