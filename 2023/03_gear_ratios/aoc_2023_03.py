@@ -32,17 +32,23 @@ def find_number_matches(line):
     return re.finditer(r"\d+", line)
 
 
-def is_adjacent_to_symbol(data, row_number, start_column, end_column):
-    surrounding_coords = itertools.chain(
-        (
-            (row_number + row_offset, column)
-            for column in range(start_column - 1, end_column + 2)
-            for row_offset in [-1, 1]
-        ),
-        ((row_number, column) for column in [start_column - 1, end_column + 1]),
+def is_adjacent_to_symbol(data, row, start_column, end_column):
+    cells_above_and_below = (
+        (row + row_offset, column)
+        for column in range(start_column - 1, end_column + 2)
+        for row_offset in [-1, 1]
     )
 
-    return any(map(lambda coords: is_symbol(data, coords), surrounding_coords))
+    cells_left_and_right = (
+        (row, column) for column in [start_column - 1, end_column + 1]
+    )
+
+    surrounding_cells = itertools.chain(
+        cells_above_and_below,
+        cells_left_and_right,
+    )
+
+    return any(map(lambda coords: is_symbol(data, coords), surrounding_cells))
 
 
 def is_symbol(data, coords):
