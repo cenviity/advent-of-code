@@ -9,21 +9,21 @@ def parse_input(puzzle_input):
     return puzzle_input.splitlines()
 
 
-def solve_part1(data):
+def solve_part1(engine):
     part_number_total = 0
 
-    for line_number, line in enumerate(data):
+    for line_number, line in enumerate(engine):
         number_matches = find_number_matches(line)
 
         for number_match in number_matches:
             match_start_column = number_match.start()
             match_end_column = number_match.end() - 1
-            number = int(number_match.group())
+            matched_number = int(number_match.group())
 
             if is_adjacent_to_symbol(
-                data, line_number, match_start_column, match_end_column
+                engine, line_number, match_start_column, match_end_column
             ):
-                part_number_total += number
+                part_number_total += matched_number
 
     return part_number_total
 
@@ -32,7 +32,7 @@ def find_number_matches(line):
     return re.finditer(r"\d+", line)
 
 
-def is_adjacent_to_symbol(data, row, start_column, end_column):
+def is_adjacent_to_symbol(engine, row, start_column, end_column):
     cells_above_and_below = (
         (row + row_offset, column)
         for row_offset in [-1, 1]
@@ -48,14 +48,14 @@ def is_adjacent_to_symbol(data, row, start_column, end_column):
         cells_left_and_right,
     )
 
-    return any(map(lambda coords: is_symbol(data, coords), surrounding_cells))
+    return any(map(lambda cell: is_symbol(engine, cell), surrounding_cells))
 
 
-def is_symbol(data, coords):
-    row, column = coords
+def is_symbol(engine, cell):
+    row, column = cell
 
     try:
-        return data[row][column] not in ("." + string.digits)
+        return engine[row][column] not in ("." + string.digits)
     except IndexError:
         return False
 
