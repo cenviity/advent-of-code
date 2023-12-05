@@ -29,13 +29,11 @@ def get_part_numbers(engine):
 def get_part_numbers_in_line(engine, line_number, line):
     number_matches = re.finditer(r"\d+", line)
 
-    part_numbers = (
+    return (
         extract_number_from_match(number_match)
         for number_match in number_matches
         if is_adjacent_to_symbol(engine, line_number, number_match)
     )
-
-    return part_numbers
 
 
 def extract_number_from_match(number_match):
