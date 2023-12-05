@@ -10,12 +10,18 @@ def parse_input(puzzle_input):
 
 
 def solve_part1(engine):
-    part_numbers = []
+    part_numbers_by_line = (
+        get_part_numbers(engine, line_number, line)
+        for line_number, line in enumerate(engine)
+    )
 
-    for line_number, line in enumerate(engine):
-        part_numbers += get_part_numbers(engine, line_number, line)
+    all_part_numbers = (
+        part_number
+        for line_of_part_numbers in part_numbers_by_line
+        for part_number in line_of_part_numbers
+    )
 
-    return sum(part_numbers)
+    return sum(all_part_numbers)
 
 
 def get_part_numbers(engine, line_number, line):
