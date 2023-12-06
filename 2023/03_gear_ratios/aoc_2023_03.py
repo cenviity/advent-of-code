@@ -1,4 +1,5 @@
 import itertools
+import math
 import pathlib
 import re
 import string
@@ -71,8 +72,69 @@ def is_symbol(engine, cell):
         return False
 
 
-def solve_part2(data):
-    pass
+def solve_part2(engine):
+    gears = get_gears(engine)
+
+    gear_ratios = [
+        get_gear_ratio(part_numbers)
+        for part_numbers_list in gears
+        for part_numbers in part_numbers_list
+    ]
+
+    return sum(gear_ratios)
+
+
+def get_gears(engine):
+    gears_with_empty_lists = [
+        get_gears_in_line(engine, line_number, line)
+        for line_number, line in enumerate(engine)
+    ]
+
+    return filter(lambda x: x, gears_with_empty_lists)
+
+
+def get_gears_in_line(engine, line_number, line):
+    symbol_matches = re.finditer(r"[^\d\.]", line)
+
+    return [
+        get_adjacent_part_numbers(engine, line_number, symbol_match)
+        for symbol_match in symbol_matches
+        if is_gear(engine, line_number, symbol_match)
+    ]
+
+
+def is_gear(engine, line_number, symbol_match):
+    adjacent_part_numbers = get_adjacent_part_numbers(engine, line_number, symbol_match)
+
+    return len(adjacent_part_numbers) == 2
+
+
+def get_adjacent_part_numbers(engine, line_number, symbol_match):
+    start_column = symbol_match.start()
+    end_column = symbol_match.end() - 1
+
+    number_matches_in_line_above = get_number_matches_in_line(engine[line_number - 1])
+    number_matches_in_current_line = get_number_matches_in_line(engine[line_number])
+    number_matches_in_line_below = get_number_matches_in_line(engine[line_number + 1])
+
+    return [
+        extract_number_from_match(number_match)
+        for number_match in itertools.chain(
+            number_matches_in_line_above,
+            number_matches_in_current_line,
+            number_matches_in_line_below,
+        )
+        if number_match.end() - 1 in range(start_column - 1, end_column + 2)
+        or number_match.start() in range(start_column - 1, end_column + 2)
+    ]
+
+
+def get_number_matches_in_line(line):
+    return re.finditer(r"\d+", line)
+
+
+def get_gear_ratio(part_numbers):
+    return math.prod(part_numbers)
 
 
 def solve_day(puzzle_input):
