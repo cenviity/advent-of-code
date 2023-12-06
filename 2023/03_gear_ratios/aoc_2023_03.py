@@ -43,17 +43,15 @@ def extract_number_from_match(number_match):
 
 def is_adjacent_to_symbol(engine, row, number_match):
     start_column = number_match.start()
-    end_column = number_match.end() - 1
+    end_column = number_match.end()
 
     cells_above_and_below = (
         (row + row_offset, column)
         for row_offset in [-1, 1]
-        for column in range(start_column - 1, end_column + 2)
+        for column in range(start_column - 1, end_column + 1)
     )
 
-    cells_left_and_right = (
-        (row, column) for column in [start_column - 1, end_column + 1]
-    )
+    cells_left_and_right = ((row, column) for column in [start_column - 1, end_column])
 
     surrounding_cells = itertools.chain(
         cells_above_and_below,
@@ -109,7 +107,7 @@ def is_gear(engine, line_number, symbol_match):
 
 def get_adjacent_part_numbers(engine, line_number, symbol_match):
     start_column = symbol_match.start()
-    end_column = symbol_match.end() - 1
+    end_column = symbol_match.end()
 
     number_matches_in_line_above = get_number_matches_in_line(engine[line_number - 1])
     number_matches_in_current_line = get_number_matches_in_line(engine[line_number])
@@ -122,8 +120,8 @@ def get_adjacent_part_numbers(engine, line_number, symbol_match):
             number_matches_in_current_line,
             number_matches_in_line_below,
         )
-        if number_match.end() - 1 in range(start_column - 1, end_column + 2)
-        or number_match.start() in range(start_column - 1, end_column + 2)
+        if number_match.end() - 1 in range(start_column - 1, end_column + 1)
+        or number_match.start() in range(start_column - 1, end_column + 1)
     ]
 
 
