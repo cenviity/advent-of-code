@@ -113,13 +113,15 @@ def get_adjacent_part_numbers(engine, line_number, symbol_match):
     number_matches_in_current_line = get_number_matches_in_line(engine[line_number])
     number_matches_in_line_below = get_number_matches_in_line(engine[line_number + 1])
 
+    number_matches = itertools.chain(
+        number_matches_in_line_above,
+        number_matches_in_current_line,
+        number_matches_in_line_below,
+    )
+
     return [
         extract_number_from_match(number_match)
-        for number_match in itertools.chain(
-            number_matches_in_line_above,
-            number_matches_in_current_line,
-            number_matches_in_line_below,
-        )
+        for number_match in number_matches
         if number_match.end() - 1 in range(start_column - 1, end_column + 1)
         or number_match.start() in range(start_column - 1, end_column + 1)
     ]
