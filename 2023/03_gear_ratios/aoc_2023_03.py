@@ -85,12 +85,10 @@ def solve_part2(engine):
 
 
 def get_gears(engine):
-    gears_with_empty_lists = [
+    return [
         get_gears_in_line(engine, line_number, line)
         for line_number, line in enumerate(engine)
     ]
-
-    return filter(bool, gears_with_empty_lists)
 
 
 def get_gears_in_line(engine, line_number, line):
