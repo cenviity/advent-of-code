@@ -90,7 +90,7 @@ def get_gears(engine):
         for line_number, line in enumerate(engine)
     ]
 
-    return filter(lambda x: x, gears_with_empty_lists)
+    return filter(bool, gears_with_empty_lists)
 
 
 def get_gears_in_line(engine, line_number, line):
