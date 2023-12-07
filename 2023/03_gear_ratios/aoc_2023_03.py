@@ -4,14 +4,21 @@ import pathlib
 import re
 import string
 import sys
+from typing import Iterator, NewType, TypeAlias
+
+EngineLine = NewType("EngineLine", str)
+Engine = NewType("Engine", list[EngineLine])
+PartNumber = NewType("PartNumber", int)
+StringMatch: TypeAlias = re.Match[str]
+Cell = NewType("Cell", tuple[int, int])
 
 
-def parse_input(puzzle_input):
-    return puzzle_input.splitlines()
+def parse_input(puzzle_input: str) -> Engine:
+    return Engine(list(map(EngineLine, puzzle_input.splitlines())))
 
 
-def solve_part1(engine):
-    all_part_numbers = (
+def solve_part1(engine: Engine) -> int:
+    all_part_numbers: Iterator[PartNumber] = (
         part_number
         for line_of_part_numbers in get_part_numbers(engine)
         for part_number in line_of_part_numbers
@@ -20,40 +27,46 @@ def solve_part1(engine):
     return sum(all_part_numbers)
 
 
-def get_part_numbers(engine):
+def get_part_numbers(
+    engine: Engine,
+) -> Iterator[Iterator[PartNumber]]:
     return (
         get_part_numbers_in_line(engine, line_number, line)
         for line_number, line in enumerate(engine)
     )
 
 
-def get_part_numbers_in_line(engine, line_number, line):
-    number_matches = re.finditer(r"\d+", line)
+def get_part_numbers_in_line(
+    engine: Engine, line_number: int, line: EngineLine
+) -> Iterator[PartNumber]:
+    number_matches: Iterator[StringMatch] = re.finditer(r"\d+", line)
 
     return (
-        extract_number_from_match(number_match)
+        PartNumber(extract_number_from_match(number_match))
         for number_match in number_matches
         if is_adjacent_to_symbol(engine, line_number, number_match)
     )
 
 
-def extract_number_from_match(number_match):
+def extract_number_from_match(number_match: StringMatch) -> int:
     return int(number_match.group())
 
 
-def is_adjacent_to_symbol(engine, row, number_match):
-    start_column = number_match.start()
-    end_column = number_match.end()
+def is_adjacent_to_symbol(engine: Engine, row: int, number_match: StringMatch) -> bool:
+    start_column: int = number_match.start()
+    end_column: int = number_match.end()
 
-    cells_above_and_below = (
-        (row + row_offset, column)
+    cells_above_and_below: Iterator[Cell] = (
+        Cell((row + row_offset, column))
         for row_offset in [-1, 1]
         for column in range(start_column - 1, end_column + 1)
     )
 
-    cells_left_and_right = ((row, column) for column in [start_column - 1, end_column])
+    cells_left_and_right: Iterator[Cell] = (
+        Cell((row, column)) for column in [start_column - 1, end_column]
+    )
 
-    surrounding_cells = itertools.chain(
+    surrounding_cells: itertools.chain[Cell] = itertools.chain(
         cells_above_and_below,
         cells_left_and_right,
     )
@@ -61,7 +74,9 @@ def is_adjacent_to_symbol(engine, row, number_match):
     return any(is_symbol(engine, cell) for cell in surrounding_cells)
 
 
-def is_symbol(engine, cell):
+def is_symbol(engine: Engine, cell: Cell) -> bool:
+    row: int
+    column: int
     row, column = cell
 
     try:
@@ -70,10 +85,10 @@ def is_symbol(engine, cell):
         return False
 
 
-def solve_part2(engine):
-    gears = get_gears(engine)
+def solve_part2(engine: Engine) -> int:
+    gears: Iterator[Iterator[Iterator[PartNumber]]] = get_gears(engine)
 
-    gear_ratios = [
+    gear_ratios: list[int] = [
         get_gear_ratio(part_numbers)
         for part_numbers_list in gears
         for part_numbers in part_numbers_list
@@ -82,66 +97,75 @@ def solve_part2(engine):
     return sum(gear_ratios)
 
 
-def get_gears(engine):
-    return [
+def get_gears(engine: Engine) -> Iterator[Iterator[Iterator[PartNumber]]]:
+    return (
         get_gears_in_line(engine, line_number, line)
         for line_number, line in enumerate(engine)
-    ]
+    )
 
 
-def get_gears_in_line(engine, line_number, line):
-    symbol_matches = re.finditer(r"[^\d\.]", line)
+def get_gears_in_line(
+    engine: Engine, line_number: int, line: EngineLine
+) -> Iterator[Iterator[PartNumber]]:
+    symbol_matches: Iterator[StringMatch] = re.finditer(r"[^\d\.]", line)
 
-    return [
+    return (
         get_adjacent_part_numbers(engine, line_number, symbol_match)
         for symbol_match in symbol_matches
         if is_gear(engine, line_number, symbol_match)
-    ]
+    )
 
 
-def is_gear(engine, line_number, symbol_match):
-    adjacent_part_numbers = get_adjacent_part_numbers(engine, line_number, symbol_match)
+def is_gear(engine: Engine, line_number: int, symbol_match: StringMatch) -> bool:
+    adjacent_part_numbers: Iterator[PartNumber] = get_adjacent_part_numbers(
+        engine, line_number, symbol_match
+    )
 
-    return len(adjacent_part_numbers) == 2
+    return len(list(adjacent_part_numbers)) == 2
 
 
-def get_adjacent_part_numbers(engine, line_number, symbol_match):
-    start_column = symbol_match.start()
-    end_column = symbol_match.end()
+def get_adjacent_part_numbers(
+    engine: Engine, line_number: int, symbol_match: StringMatch
+) -> Iterator[PartNumber]:
+    start_column: int = symbol_match.start()
+    end_column: int = symbol_match.end()
 
+    number_matches_in_line_above: Iterator[StringMatch]
     number_matches_in_line_above = get_number_matches_in_line(engine[line_number - 1])
+    number_matches_in_current_line: Iterator[StringMatch]
     number_matches_in_current_line = get_number_matches_in_line(engine[line_number])
+    number_matches_in_line_below: Iterator[StringMatch]
     number_matches_in_line_below = get_number_matches_in_line(engine[line_number + 1])
 
-    number_matches = itertools.chain(
+    number_matches: itertools.chain[StringMatch] = itertools.chain(
         number_matches_in_line_above,
         number_matches_in_current_line,
         number_matches_in_line_below,
     )
 
-    return [
-        extract_number_from_match(number_match)
+    return (
+        PartNumber(extract_number_from_match(number_match))
         for number_match in number_matches
         if number_match.end() - 1 in range(start_column - 1, end_column + 1)
         or number_match.start() in range(start_column - 1, end_column + 1)
-    ]
+    )
 
 
-def get_number_matches_in_line(line):
+def get_number_matches_in_line(line: EngineLine) -> Iterator[StringMatch]:
     return re.finditer(r"\d+", line)
 
 
-def get_gear_ratio(part_numbers):
+def get_gear_ratio(part_numbers: Iterator[PartNumber]) -> int:
     return math.prod(part_numbers)
 
 
-def solve_day(puzzle_input):
-    data = parse_input(puzzle_input)
+def solve_day(puzzle_input: str) -> Iterator[tuple[int, int]]:
+    data: Engine = parse_input(puzzle_input)
 
-    solution1 = solve_part1(data)
-    solution2 = solve_part2(data)
+    solution1: int = solve_part1(data)
+    solution2: int = solve_part2(data)
 
-    return solution1, solution2
+    yield solution1, solution2
 
 
 if __name__ == "__main__":
