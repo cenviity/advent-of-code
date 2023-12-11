@@ -80,9 +80,9 @@ def is_possible_game(game: Game) -> bool:
     red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*game.cube_sets)
 
     return (
-        max(red_cubes_drawn) <= MAX_ALLOWED_CUBES[0]
-        and max(green_cubes_drawn) <= MAX_ALLOWED_CUBES[1]
-        and max(blue_cubes_drawn) <= MAX_ALLOWED_CUBES[2]
+        max(red_cubes_drawn) <= MAX_ALLOWED_CUBES.red
+        and max(green_cubes_drawn) <= MAX_ALLOWED_CUBES.green
+        and max(blue_cubes_drawn) <= MAX_ALLOWED_CUBES.blue
     )
 
 
