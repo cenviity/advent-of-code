@@ -27,34 +27,37 @@ MAX_ALLOWED_CUBES: CubeSet = CubeSet(
 def parse_input(puzzle_input: str) -> list[Game]:
     lines: list[str] = puzzle_input.splitlines()
 
-    return [extract_game(line) for line in lines]
+    return [parse_game(line) for line in lines]
 
 
-def extract_game(line: str) -> Game:
+def parse_game(line: str) -> Game:
     game_label: str
     all_cube_draws: str
     game_label, all_cube_draws = [segment.strip() for segment in line.split(":")]
 
     game_id: GameId = GameId(int(game_label.removeprefix("Game ")))
-    cube_draws: list[str] = [
-        cube_draw.strip() for cube_draw in all_cube_draws.split(";")
-    ]
-    processed_cube_draws: list[CubeSet] = list(map(extract_cubeset, cube_draws))
 
-    return Game(game_id, processed_cube_draws)
+    cube_draws: list[str] = parse_cube_draws(all_cube_draws)
+    cube_sets: list[CubeSet] = list(map(parse_cubeset, cube_draws))
+
+    return Game(game_id, cube_sets)
 
 
-def extract_cubeset(cube_draw: str) -> CubeSet:
+def parse_cube_draws(all_cube_draws: str) -> list[str]:
+    return [cube_draw.strip() for cube_draw in all_cube_draws.split(";")]
+
+
+def parse_cubeset(cube_draw: str) -> CubeSet:
     cube_sets: list[str] = [cube_set.strip() for cube_set in cube_draw.split(",")]
 
     processed_cube_draw: dict[str, int] = dict(
-        extract_cube_colour_and_count(cube_set) for cube_set in cube_sets
+        parse_cube_colour_and_count(cube_set) for cube_set in cube_sets
     )
 
     return CubeSet(**processed_cube_draw)
 
 
-def extract_cube_colour_and_count(cube_set: str) -> tuple[str, int]:
+def parse_cube_colour_and_count(cube_set: str) -> tuple[str, int]:
     cube_count: str
     cube_colour: str
     cube_count, cube_colour = cube_set.split(" ")
