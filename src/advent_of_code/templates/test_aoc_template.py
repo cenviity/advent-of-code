@@ -1,25 +1,25 @@
 import pathlib
 import pytest
-import aoc_template as aoc
+import advent_of_code.templates.aoc_template as aoc
 
-PUZZLE_DIR = pathlib.Path(__file__).parent
+PUZZLE_DIR: pathlib.Path = pathlib.Path(__file__).parent
 
 
 @pytest.fixture
 def example1() -> None:
-    puzzle_input = (PUZZLE_DIR / "example1.txt").read_text().strip()
+    puzzle_input: str = (PUZZLE_DIR / "example1.txt").read_text().strip()
     return aoc.parse_input(puzzle_input)
 
 
 @pytest.fixture
 def example2() -> None:
-    puzzle_input = (PUZZLE_DIR / "example2.txt").read_text().strip()
+    puzzle_input: str = (PUZZLE_DIR / "example2.txt").read_text().strip()
     return aoc.parse_input(puzzle_input)
 
 
 @pytest.fixture
 def actual_input() -> None:
-    puzzle_input = (PUZZLE_DIR / "input.txt").read_text().strip()
+    puzzle_input: str = (PUZZLE_DIR / "input.txt").read_text().strip()
     return aoc.parse_input(puzzle_input)
 
 
