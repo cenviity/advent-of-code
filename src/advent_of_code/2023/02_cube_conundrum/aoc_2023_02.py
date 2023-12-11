@@ -45,7 +45,7 @@ def extract_cubeset(cube_draw: str) -> CubeSet:
         extract_cube_colour_and_count(cube_set) for cube_set in cube_sets
     )
 
-    return convert_to_cubeset(processed_cube_draw)
+    return CubeSet(**processed_cube_draw)
 
 
 def extract_cube_colour_and_count(cube_set: str) -> tuple[str, int]:
@@ -54,10 +54,6 @@ def extract_cube_colour_and_count(cube_set: str) -> tuple[str, int]:
     cube_count, cube_colour = cube_set.split(" ")
 
     return cube_colour, int(cube_count)
-
-
-def convert_to_cubeset(cube_draw: dict[str, int]) -> CubeSet:
-    return CubeSet(**cube_draw)
 
 
 def solve_part1(games: list[tuple[GameId, list[CubeSet]]]) -> int:
