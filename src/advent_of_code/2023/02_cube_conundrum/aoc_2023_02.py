@@ -64,19 +64,17 @@ def extract_cube_colour_and_count(cube_set: str) -> tuple[str, int]:
 
 def solve_part1(games: list[Game]) -> int:
     possible_game_ids: list[GameId] = [
-        game[0] for game in games if is_possible_game(game)
+        game.game_id for game in games if is_possible_game(game)
     ]
 
     return sum(possible_game_ids)
 
 
 def is_possible_game(game: Game) -> bool:
-    cube_sets: list[CubeSet] = game[1]
-
     red_cubes_drawn: CubeSet
     green_cubes_drawn: CubeSet
     blue_cubes_drawn: CubeSet
-    red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*cube_sets)
+    red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*game.cube_sets)
 
     return (
         max(red_cubes_drawn) <= MAX_ALLOWED_CUBES[0]
@@ -92,12 +90,10 @@ def solve_part2(games: list[Game]) -> int:
 
 
 def calculate_game_power(game: Game) -> int:
-    cube_sets: list[CubeSet] = game[1]
-
     red_cubes_drawn: CubeSet
     green_cubes_drawn: CubeSet
     blue_cubes_drawn: CubeSet
-    red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*cube_sets)
+    red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*game.cube_sets)
 
     return max(red_cubes_drawn) * max(green_cubes_drawn) * max(blue_cubes_drawn)
 
