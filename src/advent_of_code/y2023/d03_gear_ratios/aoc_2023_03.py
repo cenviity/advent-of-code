@@ -13,6 +13,16 @@ StringMatch: TypeAlias = re.Match[str]
 Cell = NewType("Cell", tuple[int, int])
 
 
+def solve_day(puzzle_input: str) -> Iterator[int]:
+    data: Engine = parse_input(puzzle_input)
+
+    solution1: int = solve_part1(data)
+    solution2: int = solve_part2(data)
+
+    yield solution1
+    yield solution2
+
+
 def parse_input(puzzle_input: str) -> Engine:
     return Engine(list(map(EngineLine, puzzle_input.splitlines())))
 
@@ -157,16 +167,6 @@ def get_number_matches_in_line(line: EngineLine) -> Iterator[StringMatch]:
 
 def get_gear_ratio(part_numbers: Iterator[PartNumber]) -> int:
     return math.prod(part_numbers)
-
-
-def solve_day(puzzle_input: str) -> Iterator[int]:
-    data: Engine = parse_input(puzzle_input)
-
-    solution1: int = solve_part1(data)
-    solution2: int = solve_part2(data)
-
-    yield solution1
-    yield solution2
 
 
 if __name__ == "__main__":

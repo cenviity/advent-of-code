@@ -16,6 +16,15 @@ NUMBER_WORDS = [
 ]
 
 
+def solve_day(puzzle_input):
+    data = parse_input(puzzle_input)
+
+    solution1 = solve_part1(data)
+    solution2 = solve_part2(data)
+
+    return solution1, solution2
+
+
 def parse_input(puzzle_input):
     return puzzle_input.splitlines()
 
@@ -74,15 +83,6 @@ def find_numbers_from_right(line):
         for unit in number_pair:
             if unit in line:
                 yield line.rfind(unit), digit
-
-
-def solve_day(puzzle_input):
-    data = parse_input(puzzle_input)
-
-    solution1 = solve_part1(data)
-    solution2 = solve_part2(data)
-
-    return solution1, solution2
 
 
 if __name__ == "__main__":

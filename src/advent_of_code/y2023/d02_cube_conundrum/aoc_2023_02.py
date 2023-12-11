@@ -24,6 +24,16 @@ MAX_ALLOWED_CUBES: CubeSet = CubeSet(
 )
 
 
+def solve_day(puzzle_input: str) -> Iterator[int]:
+    data: list[Game] = parse_input(puzzle_input)
+
+    solution1: int = solve_part1(data)
+    solution2: int = solve_part2(data)
+
+    yield solution1
+    yield solution2
+
+
 def parse_input(puzzle_input: str) -> list[Game]:
     lines: list[str] = puzzle_input.splitlines()
 
@@ -99,16 +109,6 @@ def calculate_game_power(game: Game) -> int:
     red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*game.cube_sets)
 
     return max(red_cubes_drawn) * max(green_cubes_drawn) * max(blue_cubes_drawn)
-
-
-def solve_day(puzzle_input: str) -> Iterator[int]:
-    data: list[Game] = parse_input(puzzle_input)
-
-    solution1: int = solve_part1(data)
-    solution2: int = solve_part2(data)
-
-    yield solution1
-    yield solution2
 
 
 if __name__ == "__main__":
