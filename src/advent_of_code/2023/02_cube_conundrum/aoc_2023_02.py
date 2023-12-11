@@ -74,9 +74,9 @@ def solve_part1(games: list[Game]) -> int:
 
 
 def is_possible_game(game: Game) -> bool:
-    red_cubes_drawn: CubeSet
-    green_cubes_drawn: CubeSet
-    blue_cubes_drawn: CubeSet
+    red_cubes_drawn: tuple[int, int, int]
+    green_cubes_drawn: tuple[int, int, int]
+    blue_cubes_drawn: tuple[int, int, int]
     red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*game.cube_sets)
 
     return (
@@ -93,9 +93,9 @@ def solve_part2(games: list[Game]) -> int:
 
 
 def calculate_game_power(game: Game) -> int:
-    red_cubes_drawn: CubeSet
-    green_cubes_drawn: CubeSet
-    blue_cubes_drawn: CubeSet
+    red_cubes_drawn: tuple[int, int, int]
+    green_cubes_drawn: tuple[int, int, int]
+    blue_cubes_drawn: tuple[int, int, int]
     red_cubes_drawn, green_cubes_drawn, blue_cubes_drawn = zip(*game.cube_sets)
 
     return max(red_cubes_drawn) * max(green_cubes_drawn) * max(blue_cubes_drawn)
