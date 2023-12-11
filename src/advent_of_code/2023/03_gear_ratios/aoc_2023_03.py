@@ -172,8 +172,8 @@ if __name__ == "__main__":
     for path in sys.argv[1:]:
         print(f"{path}:")
 
-        puzzle_input = pathlib.Path(path).read_text().strip()
-        solutions = solve_day(puzzle_input)
+        puzzle_input: str = pathlib.Path(path).read_text().strip()
+        solutions: Iterator[tuple[int, int]] = solve_day(puzzle_input)
 
         for solution in solutions:
             print(str(solution))
