@@ -16,11 +16,8 @@ Cell = NewType("Cell", tuple[int, int])
 def solve_day(puzzle_input: str) -> Iterator[int]:
     data: Engine = parse_input(puzzle_input)
 
-    solution1: int = solve_part1(data)
-    solution2: int = solve_part2(data)
-
-    yield solution1
-    yield solution2
+    yield solve_part1(data)
+    yield solve_part2(data)
 
 
 def parse_input(puzzle_input: str) -> Engine:

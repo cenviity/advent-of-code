@@ -19,10 +19,8 @@ NUMBER_WORDS = [
 def solve_day(puzzle_input):
     data = parse_input(puzzle_input)
 
-    solution1 = solve_part1(data)
-    solution2 = solve_part2(data)
-
-    return solution1, solution2
+    yield solve_part1(data)
+    yield solve_part2(data)
 
 
 def parse_input(puzzle_input):
