@@ -29,12 +29,12 @@ def parse_input(puzzle_input: str) -> list[str]:
 
 
 def solve_part1(data: list[str]) -> int:
-    calibration_values: list[int] = [find_first_and_last_digits(line) for line in data]
+    calibration_values: list[int] = [find_calibration_value(line) for line in data]
 
     return sum(calibration_values)
 
 
-def find_first_and_last_digits(line: str) -> int:
+def find_calibration_value(line: str) -> int:
     digits_only: list[str] = [char for char in line if is_digit(char)]
 
     first_digit: str
@@ -56,7 +56,7 @@ def solve_part2(data: list[str]) -> int:
     return sum(calibration_values)
 
 
-def find_first_and_last_digits_with_numeric_words(line: str) -> int:
+def find_calibration_value_with_numeric_words(line: str) -> int:
     numbers_from_left: Iterator[tuple[int, str]] = find_numbers_from_left(line)
     numbers_from_right: Iterator[tuple[int, str]] = find_numbers_from_right(line)
 
