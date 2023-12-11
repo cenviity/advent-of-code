@@ -2,7 +2,7 @@ import pathlib
 import pytest
 import advent_of_code.y2023.d02_cube_conundrum.aoc_2023_02 as aoc
 
-PUZZLE_DIR = pathlib.Path(__file__).parent
+PUZZLE_DIR: pathlib.Path = pathlib.Path(__file__).parent
 
 
 @pytest.fixture

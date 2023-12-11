@@ -2,7 +2,7 @@ import pathlib
 import pytest
 import advent_of_code.y2023.d03_gear_ratios.aoc_2023_03 as aoc
 
-PUZZLE_DIR = pathlib.Path(__file__).parent
+PUZZLE_DIR: pathlib.Path = pathlib.Path(__file__).parent
 
 
 @pytest.fixture
