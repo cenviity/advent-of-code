@@ -1,6 +1,6 @@
 import pathlib
 import pytest
-import aoc_2023_03 as aoc
+import advent_of_code.y2023.d03_gear_ratios.aoc_2023_03 as aoc
 
 PUZZLE_DIR = pathlib.Path(__file__).parent
 
