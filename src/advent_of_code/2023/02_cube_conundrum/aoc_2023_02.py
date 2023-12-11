@@ -11,6 +11,12 @@ class CubeSet(NamedTuple):
 
 GameId = NewType("GameId", int)
 
+
+class Game(NamedTuple):
+    game_id: GameId
+    cube_sets: list[CubeSet]
+
+
 MAX_ALLOWED_CUBES: CubeSet = CubeSet(
     red=12,
     green=13,
@@ -18,13 +24,13 @@ MAX_ALLOWED_CUBES: CubeSet = CubeSet(
 )
 
 
-def parse_input(puzzle_input: str) -> list[tuple[GameId, list[CubeSet]]]:
+def parse_input(puzzle_input: str) -> list[Game]:
     lines: list[str] = puzzle_input.splitlines()
 
-    return [extract_gameid_and_cubesets(line) for line in lines]
+    return [extract_game(line) for line in lines]
 
 
-def extract_gameid_and_cubesets(line: str) -> tuple[GameId, list[CubeSet]]:
+def extract_game(line: str) -> Game:
     game_label: str
     all_cube_draws: str
     game_label, all_cube_draws = [segment.strip() for segment in line.split(":")]
@@ -35,7 +41,7 @@ def extract_gameid_and_cubesets(line: str) -> tuple[GameId, list[CubeSet]]:
     ]
     processed_cube_draws: list[CubeSet] = list(map(extract_cubeset, cube_draws))
 
-    return game_id, processed_cube_draws
+    return Game(game_id, processed_cube_draws)
 
 
 def extract_cubeset(cube_draw: str) -> CubeSet:
@@ -56,7 +62,7 @@ def extract_cube_colour_and_count(cube_set: str) -> tuple[str, int]:
     return cube_colour, int(cube_count)
 
 
-def solve_part1(games: list[tuple[GameId, list[CubeSet]]]) -> int:
+def solve_part1(games: list[Game]) -> int:
     possible_game_ids: list[GameId] = [
         game[0] for game in games if is_possible_game(game)
     ]
@@ -64,7 +70,7 @@ def solve_part1(games: list[tuple[GameId, list[CubeSet]]]) -> int:
     return sum(possible_game_ids)
 
 
-def is_possible_game(game: tuple[GameId, list[CubeSet]]) -> bool:
+def is_possible_game(game: Game) -> bool:
     cube_sets: list[CubeSet] = game[1]
 
     red_cubes_drawn: CubeSet
@@ -79,13 +85,13 @@ def is_possible_game(game: tuple[GameId, list[CubeSet]]) -> bool:
     )
 
 
-def solve_part2(games: list[tuple[GameId, list[CubeSet]]]) -> int:
+def solve_part2(games: list[Game]) -> int:
     game_powers: list[int] = [calculate_game_power(game) for game in games]
 
     return sum(game_powers)
 
 
-def calculate_game_power(game: tuple[GameId, list[CubeSet]]) -> int:
+def calculate_game_power(game: Game) -> int:
     cube_sets: list[CubeSet] = game[1]
 
     red_cubes_drawn: CubeSet
@@ -97,7 +103,7 @@ def calculate_game_power(game: tuple[GameId, list[CubeSet]]) -> int:
 
 
 def solve_day(puzzle_input: str) -> Iterator[int]:
-    data: list[tuple[GameId, list[CubeSet]]] = parse_input(puzzle_input)
+    data: list[Game] = parse_input(puzzle_input)
 
     solution1: int = solve_part1(data)
     solution2: int = solve_part2(data)
