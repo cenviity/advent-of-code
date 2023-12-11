@@ -1,6 +1,7 @@
 import pathlib
 import sys
 from collections import defaultdict
+from typing import Iterator
 
 MAX_ALLOWED_CUBES: tuple[int, int, int] = (
     12,
@@ -92,13 +93,14 @@ def calculate_game_power(game: tuple[int, list[tuple[int, int, int]]]) -> int:
     return max(red_cubes_drawn) * max(green_cubes_drawn) * max(blue_cubes_drawn)
 
 
-def solve_day(puzzle_input: str) -> tuple[int, int]:
+def solve_day(puzzle_input: str) -> Iterator[int]:
     data: list[tuple[int, list[tuple[int, int, int]]]] = parse_input(puzzle_input)
 
     solution1: int = solve_part1(data)
     solution2: int = solve_part2(data)
 
-    return solution1, solution2
+    yield solution1
+    yield solution2
 
 
 if __name__ == "__main__":
@@ -106,7 +108,7 @@ if __name__ == "__main__":
         print(f"{path}:")
 
         puzzle_input: str = pathlib.Path(path).read_text().strip()
-        solutions: tuple[int, int] = solve_day(puzzle_input)
+        solutions: Iterator[int] = solve_day(puzzle_input)
 
         for solution in solutions:
             print(str(solution))
