@@ -48,10 +48,10 @@ def test_part1_solution(actual_input: None) -> None:
     assert aoc.solve_part1(actual_input) == 26443
 
 
-@pytest.mark.skip(reason="Not implemented")
+# @pytest.mark.skip(reason="Not implemented")
 def test_part2_example1(example1: None) -> None:
     """Test part 2 on example input."""
-    assert aoc.solve_part2(example1) == ...
+    assert aoc.solve_part2(example1) == 30
 
 
 @pytest.mark.skip(reason="Not implemented")
