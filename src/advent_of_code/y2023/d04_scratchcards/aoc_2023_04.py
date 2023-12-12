@@ -53,16 +53,14 @@ def solve_part1(cards: Sequence[Card]) -> int:
 
 
 def get_points(card: Card) -> int:
+    if set(card.winning_numbers).isdisjoint(card.hand):
+        return 0
+
     winning_numbers_in_hand: set[int] = set(card.winning_numbers).intersection(
         card.hand
     )
 
-    winning_numbers_in_hand_count: int = len(winning_numbers_in_hand)
-
-    if winning_numbers_in_hand_count == 0:
-        return 0
-    else:
-        return 2 ** (winning_numbers_in_hand_count - 1)
+    return 2 ** (len(winning_numbers_in_hand) - 1)
 
 
 def solve_part2(data: Sequence[Card]) -> int:
