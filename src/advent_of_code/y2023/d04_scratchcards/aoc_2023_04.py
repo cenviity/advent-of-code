@@ -32,10 +32,14 @@ def parse_card(line: str) -> Card:
     _card_id, _winning_numbers, _hand = _line.groups()
 
     card_id: int = int(_card_id)
-    winning_numbers = [int(x) for x in re.split(r"\s+", _winning_numbers)]
-    hand = [int(x) for x in re.split(r"\s+", _hand)]
+    winning_numbers: list[int] = parse_numbers(_winning_numbers)
+    hand: list[int] = parse_numbers(_hand)
 
     return Card(card_id, winning_numbers, hand)
+
+
+def parse_numbers(line: str) -> list[int]:
+    return [int(x) for x in line.split()]
 
 
 def parse_line(line: str) -> re.Match[str]:
