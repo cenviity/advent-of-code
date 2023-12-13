@@ -24,9 +24,7 @@ def parse_input(puzzle_input: str) -> Sequence[Card]:
 
 
 def parse_card(line: str) -> Card:
-    _line: Optional[re.Match[str]] = parse_line(line)
-
-    assert _line is not None
+    _line: re.Match[str] = parse_line(line)
 
     _card_id: str
     _winning_numbers: str
@@ -40,10 +38,15 @@ def parse_card(line: str) -> Card:
     return Card(card_id, winning_numbers, hand)
 
 
-def parse_line(line: str) -> Optional[re.Match[str]]:
+def parse_line(line: str) -> re.Match[str]:
     pattern: str = r"Card\s+(\d+):\s+([\d ]+) \|\s+([\d ]+)"
 
-    return re.match(pattern, line)
+    result: Optional[re.Match[str]] = re.match(pattern, line)
+
+    if result is None:
+        raise ValueError("Invalid line")
+
+    return result
 
 
 def solve_part1(cards: Sequence[Card]) -> int:
