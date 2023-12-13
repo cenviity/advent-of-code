@@ -37,30 +37,30 @@ def test_parse_example1(example1: None) -> None:
 
 
 # @pytest.mark.skip(reason="Not implemented")
-def test_part1_example1(example1: None) -> None:
+def test_part1_example1(example1: aoc.Sequence[aoc.Card]) -> None:
     """Test part 1 on example input."""
     assert aoc.solve_part1(example1) == 13
 
 
 # @pytest.mark.skip(reason="Not implemented")
-def test_part1_solution(actual_input: None) -> None:
+def test_part1_solution(actual_input: aoc.Sequence[aoc.Card]) -> None:
     """Test part 1 on actual solution."""
     assert aoc.solve_part1(actual_input) == 26443
 
 
 # @pytest.mark.skip(reason="Not implemented")
-def test_part2_example1(example1: None) -> None:
+def test_part2_example1(example1: aoc.Sequence[aoc.Card]) -> None:
     """Test part 2 on example input."""
     assert aoc.solve_part2(example1) == 30
 
 
 @pytest.mark.skip(reason="Not implemented")
-def test_part2_example2(example2: None) -> None:
+def test_part2_example2(example2: aoc.Sequence[aoc.Card]) -> None:
     """Test part 2 on example input."""
     assert aoc.solve_part2(example2) == ...
 
 
 @pytest.mark.skip(reason="Not implemented")
-def test_part2_solution(actual_input: None) -> None:
+def test_part2_solution(actual_input: aoc.Sequence[aoc.Card]) -> None:
     """Test part 2 on actual solution."""
     assert aoc.solve_part2(actual_input) == ...
