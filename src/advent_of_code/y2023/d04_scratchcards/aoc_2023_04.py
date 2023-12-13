@@ -1,13 +1,30 @@
+from dataclasses import dataclass
 import pathlib
 import re
 import sys
-from typing import Iterator, NamedTuple, Optional, Sequence
+from typing import Iterator, Optional, Sequence
 
 
-class Card(NamedTuple):
+@dataclass
+class Card:
     card_id: int
     winning_numbers: Sequence[int]
     hand: Sequence[int]
+
+    @property
+    def matches(self) -> set[int]:
+        return set(self.winning_numbers).intersection(self.hand)
+
+    @property
+    def matches_count(self) -> int:
+        return len(self.matches)
+
+    @property
+    def points(self) -> int:
+        if self.matches_count == 0:
+            return 0
+
+        return 2 ** (self.matches_count - 1)
 
 
 def solve_day(puzzle_input: str) -> Iterator[int]:
@@ -52,23 +69,9 @@ def parse_numbers(line: str) -> list[int]:
 
 
 def solve_part1(cards: Sequence[Card]) -> int:
-    points_for_winning_cards: Sequence[int] = [get_points(card) for card in cards]
+    points_for_winning_cards: Sequence[int] = [card.points for card in cards]
 
     return sum(points_for_winning_cards)
-
-
-def get_points(card: Card) -> int:
-    matches_count = len(get_matches(card))
-
-    if matches_count == 0:
-        return 0
-
-    return 2 ** (matches_count - 1)
-
-
-def get_matches(card: Card) -> set[int]:
-    return set(card.winning_numbers).intersection(card.hand)
-
 
 
 def solve_part2(data: Sequence[Card]) -> int:
