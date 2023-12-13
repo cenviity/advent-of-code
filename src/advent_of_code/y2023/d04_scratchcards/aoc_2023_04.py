@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from functools import reduce
 import pathlib
 import re
 import sys
@@ -25,6 +26,10 @@ class Card:
             return 0
 
         return 2 ** (self.matches_count - 1)
+
+    @property
+    def unique_cards_won(self) -> Sequence[int]:
+        return range(self.card_id + 1, self.card_id + self.matches_count + 1)
 
 
 def solve_day(puzzle_input: str) -> Iterator[int]:
@@ -74,8 +79,20 @@ def solve_part1(cards: Sequence[Card]) -> int:
     return sum(points_for_winning_cards)
 
 
-def solve_part2(data: Sequence[Card]) -> int:
-    pass
+def solve_part2(cards: Sequence[Card]) -> int:
+    initial_card_counts: dict[int, int] = {card.card_id: 1 for card in cards}
+    card_counts: dict[int, int] = reduce(update_card_counts, cards, initial_card_counts)
+
+    return sum(card_counts.values())
+
+
+def update_card_counts(card_counts: dict[int, int], card: Card) -> dict[int, int]:
+    for unique_card_won in card.unique_cards_won:
+        card_counts.update(
+            {unique_card_won: card_counts[unique_card_won] + card_counts[card.card_id]}
+        )
+
+    return card_counts
 
 
 if __name__ == "__main__":
