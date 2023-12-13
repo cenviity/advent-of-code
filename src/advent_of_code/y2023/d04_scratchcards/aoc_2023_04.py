@@ -24,12 +24,10 @@ def parse_input(puzzle_input: str) -> Sequence[Card]:
 
 
 def parse_card(line: str) -> Card:
-    _line: re.Match[str] = parse_line(line)
-
     _card_id: str
     _winning_numbers: str
     _hand: str
-    _card_id, _winning_numbers, _hand = _line.groups()
+    _card_id, _winning_numbers, _hand = parse_card_parts(line)
 
     card_id: int = int(_card_id)
     winning_numbers: list[int] = parse_numbers(_winning_numbers)
@@ -38,19 +36,19 @@ def parse_card(line: str) -> Card:
     return Card(card_id, winning_numbers, hand)
 
 
-def parse_numbers(line: str) -> list[int]:
-    return [int(x) for x in line.split()]
-
-
-def parse_line(line: str) -> re.Match[str]:
+def parse_card_parts(line: str) -> Iterator[str]:
     pattern: str = r"Card\s+(\d+):\s+([\d ]+) \|\s+([\d ]+)"
 
-    result: Optional[re.Match[str]] = re.match(pattern, line)
+    card_parts: Optional[re.Match[str]] = re.match(pattern, line)
 
-    if result is None:
-        raise ValueError("Invalid line")
+    if card_parts is None:
+        raise ValueError("Line does not match expected pattern")
 
-    return result
+    yield from card_parts.groups()
+
+
+def parse_numbers(line: str) -> list[int]:
+    return [int(x) for x in line.split()]
 
 
 def solve_part1(cards: Sequence[Card]) -> int:
