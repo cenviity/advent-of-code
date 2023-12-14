@@ -30,7 +30,7 @@ def parse_input(puzzle_input: str) -> Sequence[Card]:
 @generate
 def parse_card() -> Generator[Parser, None, Card]:
     yield symbol("Card")
-    card_id = yield p_number.map(int).map(CardId)
+    card_id = yield p_number.map(CardId)
     yield symbol(":")
     winning_numbers = yield p_number.many()
     yield symbol("|")
