@@ -5,7 +5,6 @@
 from parsy import Parser, regex, string
 
 p_optional_whitespace: Parser = regex(r"\s*")
-p_number: Parser = regex(r"\d+").map(int) << p_optional_whitespace
 
 
 def lexeme(parser: Parser) -> Parser:
@@ -13,4 +12,7 @@ def lexeme(parser: Parser) -> Parser:
 
 
 def symbol(text: str) -> Parser:
-    return string(text) << p_optional_whitespace
+    return lexeme(string(text))
+
+
+p_number: Parser = lexeme(regex(r"\d+")).map(int)
