@@ -61,7 +61,7 @@ def test_part2_example2(example2: aoc.Sequence[Card]) -> None:
     assert aoc.solve_part2(example2) == ...
 
 
-@pytest.mark.skip(reason="Not implemented")
+# @pytest.mark.skip(reason="Not implemented")
 def test_part2_solution(actual_input: aoc.Sequence[Card]) -> None:
     """Test part 2 on actual solution."""
-    assert aoc.solve_part2(actual_input) == ...
+    assert aoc.solve_part2(actual_input) == 6284877
