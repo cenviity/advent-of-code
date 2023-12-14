@@ -1,6 +1,6 @@
 from collections import Counter
 from dataclasses import dataclass
-from functools import reduce
+import functools
 import pathlib
 import re
 import sys
@@ -86,7 +86,7 @@ def solve_part1(cards: Sequence[Card]) -> int:
 
 def solve_part2(cards: Sequence[Card]) -> int:
     initial_card_counts: Counter[CardId] = Counter({card.card_id: 1 for card in cards})
-    card_counts: Counter[CardId] = reduce(
+    card_counts: Counter[CardId] = functools.reduce(
         update_card_counts, cards, initial_card_counts
     )
 
