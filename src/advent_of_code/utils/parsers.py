@@ -16,3 +16,4 @@ def symbol(text: str) -> Parser:
 
 
 p_number: Parser = lexeme(regex(r"\d+")).map(int)
+p_letters: Parser = lexeme(regex(r"\w+"))
