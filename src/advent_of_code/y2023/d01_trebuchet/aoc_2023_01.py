@@ -1,10 +1,10 @@
 import pathlib
 import string
 import sys
+from collections.abc import Iterator, Sequence
 from itertools import chain
-from typing import Iterable, Iterator
 
-NUMBER_WORDS: list[tuple[str, str]] = [
+NUMBER_WORDS: Sequence[tuple[str, str]] = [
     ("one", "1"),
     ("two", "2"),
     ("three", "3"),
@@ -28,8 +28,8 @@ def parse_input(puzzle_input: str) -> list[str]:
     return puzzle_input.splitlines()
 
 
-def solve_part1(data: Iterable[str]) -> int:
-    calibration_values: list[int] = [find_calibration_value(line) for line in data]
+def solve_part1(data: Sequence[str]) -> int:
+    calibration_values: Iterator[int] = (find_calibration_value(line) for line in data)
 
     return sum(calibration_values)
 
@@ -48,7 +48,7 @@ def is_digit(char: str) -> bool:
     return char in string.digits
 
 
-def solve_part2(data: Iterable[str]) -> int:
+def solve_part2(data: Sequence[str]) -> int:
     calibration_values: list[int] = [
         find_calibration_value_with_numeric_words(line) for line in data
     ]

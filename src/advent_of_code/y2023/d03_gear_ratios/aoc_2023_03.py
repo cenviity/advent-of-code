@@ -4,7 +4,8 @@ import pathlib
 import re
 import string
 import sys
-from typing import Iterator, NewType, TypeAlias
+from collections.abc import Iterator
+from typing import NewType, TypeAlias
 
 EngineLine = NewType("EngineLine", str)
 Engine = NewType("Engine", list[EngineLine])

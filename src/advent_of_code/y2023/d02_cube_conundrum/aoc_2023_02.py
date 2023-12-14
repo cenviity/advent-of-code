@@ -1,6 +1,7 @@
 import pathlib
 import sys
-from typing import Iterator, NamedTuple, NewType
+from collections.abc import Iterator
+from typing import NamedTuple, NewType
 
 
 class CubeSet(NamedTuple):
