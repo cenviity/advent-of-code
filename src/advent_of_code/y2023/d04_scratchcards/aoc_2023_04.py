@@ -1,15 +1,16 @@
 # pyright: reportMissingTypeStubs = false
 # pyright: reportUnknownMemberType=false
+# pyright: reportUnknownVariableType=false
 
 import functools
 import pathlib
 import sys
 from collections import Counter
-from typing import Iterator, Sequence
+from typing import Generator, Iterator, Sequence
 
-from parsy import seq, string, whitespace
+from parsy import generate
 
-from advent_of_code.y2023.d04_scratchcards.parsers import Parser, p_number
+from advent_of_code.y2023.d04_scratchcards.parsers import Parser, p_number, symbol
 from advent_of_code.y2023.d04_scratchcards.types import Card, CardId
 
 
@@ -23,25 +24,19 @@ def solve_day(puzzle_input: str) -> Iterator[int]:
 def parse_input(puzzle_input: str) -> Sequence[Card]:
     lines: list[str] = puzzle_input.splitlines()
 
-    return [parse_card(line) for line in lines]
+    return [parse_card.parse(line) for line in lines]
 
 
-def parse_card(line: str) -> Card:
-    card_id: Parser = string("Card") >> whitespace >> p_number.map(int)
+@generate
+def parse_card() -> Generator[Parser, None, Card]:
+    yield symbol("Card")
+    card_id = yield p_number.map(int).map(CardId)
+    yield symbol(":")
+    winning_numbers = yield p_number.many()
+    yield symbol("|")
+    hand = yield p_number.many()
 
-    winning_number: Parser = p_number
-    winning_numbers: Parser = winning_number.many()
-
-    number_in_hand: Parser = p_number
-    hand: Parser = number_in_hand.many()
-
-    card: Parser = seq(
-        card_id << string(":") << whitespace,
-        winning_numbers << string("|") << whitespace,
-        hand,
-    ).combine(Card)
-
-    return card.parse(line)
+    return Card(card_id, winning_numbers, hand)  # type: ignore
 
 
 def solve_part1(cards: Sequence[Card]) -> int:
