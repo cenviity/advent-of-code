@@ -87,12 +87,10 @@ def solve_part2(cards: Sequence[Card]) -> int:
 
 
 def update_card_counts(card_counts: dict[int, int], card: Card) -> dict[int, int]:
-    for unique_card_won in card.unique_cards_won:
-        card_counts.update(
-            {unique_card_won: card_counts[unique_card_won] + card_counts[card.card_id]}
-        )
-
-    return card_counts
+    return card_counts | {
+        unique_card_won: card_counts[unique_card_won] + card_counts[card.card_id]
+        for unique_card_won in card.unique_cards_won
+    }
 
 
 if __name__ == "__main__":
