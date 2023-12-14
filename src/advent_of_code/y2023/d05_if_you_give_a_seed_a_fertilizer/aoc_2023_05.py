@@ -27,8 +27,6 @@ def solve_day(puzzle_input: str) -> Iterator[None]:
 def parse_input(almanac: str) -> Almanac:
     result = parse_almanac.parse(almanac)
 
-    print(result)
-
     return result
 
 
