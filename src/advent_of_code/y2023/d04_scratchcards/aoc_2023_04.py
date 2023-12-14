@@ -10,7 +10,7 @@ from typing import Iterator, Sequence
 
 from parsy import Parser, regex, seq, string, whitespace
 
-from .types import Card, CardId
+from advent_of_code.y2023.d04_scratchcards.types import Card, CardId
 
 
 def solve_day(puzzle_input: str) -> Iterator[int]:
