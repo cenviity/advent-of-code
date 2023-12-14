@@ -5,13 +5,14 @@ import re
 import string
 import sys
 from collections.abc import Iterator
-from typing import NewType, TypeAlias
 
-EngineLine = NewType("EngineLine", str)
-Engine = NewType("Engine", list[EngineLine])
-PartNumber = NewType("PartNumber", int)
-StringMatch: TypeAlias = re.Match[str]
-Cell = NewType("Cell", tuple[int, int])
+from advent_of_code.y2023.d03_gear_ratios.types import (
+    Cell,
+    Engine,
+    EngineLine,
+    PartNumber,
+    StringMatch,
+)
 
 
 def solve_day(puzzle_input: str) -> Iterator[int]:

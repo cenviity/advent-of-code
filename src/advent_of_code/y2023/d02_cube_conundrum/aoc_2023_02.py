@@ -1,22 +1,8 @@
 import pathlib
 import sys
 from collections.abc import Iterator
-from typing import NamedTuple, NewType
 
-
-class CubeSet(NamedTuple):
-    red: int = 0
-    green: int = 0
-    blue: int = 0
-
-
-GameId = NewType("GameId", int)
-
-
-class Game(NamedTuple):
-    game_id: GameId
-    cube_sets: list[CubeSet]
-
+from advent_of_code.y2023.d02_cube_conundrum.types import CubeSet, Game, GameId
 
 MAX_ALLOWED_CUBES: CubeSet = CubeSet(
     red=12,
