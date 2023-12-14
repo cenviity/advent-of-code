@@ -100,7 +100,7 @@ if __name__ == "__main__":
         print(f"{path}:")
 
         puzzle_input: str = pathlib.Path(path).read_text().strip()
-        solutions: Iterator[None] = solve_day(puzzle_input)
+        solutions: Iterator[int] = solve_day(puzzle_input)
 
         for solution in solutions:
             print(str(solution))
