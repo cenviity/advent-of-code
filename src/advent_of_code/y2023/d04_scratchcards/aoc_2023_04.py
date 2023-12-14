@@ -90,7 +90,7 @@ def solve_part2(cards: Sequence[Card]) -> int:
         update_card_counts, cards, initial_card_counts
     )
 
-    return sum(card_counts.values())
+    return card_counts.total()
 
 
 def update_card_counts(card_counts: Counter[CardId], card: Card) -> Counter[CardId]:
