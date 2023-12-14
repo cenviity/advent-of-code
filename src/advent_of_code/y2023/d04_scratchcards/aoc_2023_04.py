@@ -1,4 +1,4 @@
-# pyright: reportMissingTypeStubs = false
+# pyright: reportMissingTypeStubs=false
 # pyright: reportUnknownMemberType=false
 # pyright: reportUnknownVariableType=false
 
