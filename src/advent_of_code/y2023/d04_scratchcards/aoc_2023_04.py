@@ -1,3 +1,4 @@
+from collections import Counter
 from dataclasses import dataclass
 from functools import reduce
 import pathlib
@@ -80,17 +81,19 @@ def solve_part1(cards: Sequence[Card]) -> int:
 
 
 def solve_part2(cards: Sequence[Card]) -> int:
-    initial_card_counts: dict[int, int] = {card.card_id: 1 for card in cards}
-    card_counts: dict[int, int] = reduce(update_card_counts, cards, initial_card_counts)
+    initial_card_counts: Counter[int] = Counter({card.card_id: 1 for card in cards})
+    card_counts: Counter[int] = reduce(update_card_counts, cards, initial_card_counts)
 
     return sum(card_counts.values())
 
 
-def update_card_counts(card_counts: dict[int, int], card: Card) -> dict[int, int]:
-    return card_counts | {
-        unique_card_won: card_counts[unique_card_won] + card_counts[card.card_id]
-        for unique_card_won in card.unique_cards_won
-    }
+def update_card_counts(card_counts: Counter[int], card: Card) -> Counter[int]:
+    return card_counts + Counter(
+        {
+            unique_card_won: card_counts[card.card_id]
+            for unique_card_won in card.unique_cards_won
+        }
+    )
 
 
 if __name__ == "__main__":
