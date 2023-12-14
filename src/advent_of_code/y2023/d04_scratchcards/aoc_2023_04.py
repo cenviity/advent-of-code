@@ -4,12 +4,14 @@ from functools import reduce
 import pathlib
 import re
 import sys
-from typing import Iterator, Optional, Sequence
+from typing import Iterator, NewType, Optional, Sequence
+
+CardId = NewType("CardId", int)
 
 
 @dataclass
 class Card:
-    card_id: int
+    card_id: CardId
     winning_numbers: Sequence[int]
     hand: Sequence[int]
 
@@ -29,8 +31,10 @@ class Card:
         return 2 ** (self.matches_count - 1)
 
     @property
-    def unique_cards_won(self) -> Sequence[int]:
-        return range(self.card_id + 1, self.card_id + self.matches_count + 1)
+    def unique_cards_won(self) -> Iterator[CardId]:
+        return map(
+            CardId, range(self.card_id + 1, self.card_id + self.matches_count + 1)
+        )
 
 
 def solve_day(puzzle_input: str) -> Iterator[int]:
@@ -52,7 +56,7 @@ def parse_card(line: str) -> Card:
     _hand: str
     _card_id, _winning_numbers, _hand = parse_card_parts(line)
 
-    card_id: int = int(_card_id)
+    card_id: CardId = CardId(int(_card_id))
     winning_numbers: list[int] = parse_numbers(_winning_numbers)
     hand: list[int] = parse_numbers(_hand)
 
@@ -81,20 +85,22 @@ def solve_part1(cards: Sequence[Card]) -> int:
 
 
 def solve_part2(cards: Sequence[Card]) -> int:
-    initial_card_counts: Counter[int] = Counter({card.card_id: 1 for card in cards})
-    card_counts: Counter[int] = reduce(update_card_counts, cards, initial_card_counts)
+    initial_card_counts: Counter[CardId] = Counter({card.card_id: 1 for card in cards})
+    card_counts: Counter[CardId] = reduce(
+        update_card_counts, cards, initial_card_counts
+    )
 
     return sum(card_counts.values())
 
 
-def update_card_counts(card_counts: Counter[int], card: Card) -> Counter[int]:
+def update_card_counts(card_counts: Counter[CardId], card: Card) -> Counter[CardId]:
     card_copies: int = card_counts[card.card_id]
-    cards_won: Sequence[int] = card.unique_cards_won
+    cards_won: Iterator[CardId] = card.unique_cards_won
 
     return card_counts + count_cards_won(card_copies, cards_won)
 
 
-def count_cards_won(card_copies: int, cards_won: Sequence[int]) -> Counter[int]:
+def count_cards_won(card_copies: int, cards_won: Iterator[CardId]) -> Counter[CardId]:
     return Counter({card_won: card_copies for card_won in cards_won})
 
 
