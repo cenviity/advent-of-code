@@ -10,7 +10,7 @@ from typing import Generator, Iterator, Sequence
 
 from parsy import generate
 
-from advent_of_code.y2023.d04_scratchcards.parsers import Parser, p_number, symbol
+from advent_of_code.utils.parsers import Parser, p_number, symbol
 from advent_of_code.y2023.d04_scratchcards.types import Card, CardId
 
 
