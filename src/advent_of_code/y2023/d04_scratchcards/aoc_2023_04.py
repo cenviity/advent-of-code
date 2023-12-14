@@ -1,6 +1,5 @@
 # pyright: reportMissingTypeStubs = false
 # pyright: reportUnknownMemberType=false
-# pyright: reportUnknownVariableType=false
 
 import functools
 import pathlib
@@ -8,8 +7,9 @@ import sys
 from collections import Counter
 from typing import Iterator, Sequence
 
-from parsy import Parser, regex, seq, string, whitespace
+from parsy import seq, string, whitespace
 
+from advent_of_code.y2023.d04_scratchcards.parsers import Parser, p_number
 from advent_of_code.y2023.d04_scratchcards.types import Card, CardId
 
 
@@ -27,9 +27,6 @@ def parse_input(puzzle_input: str) -> Sequence[Card]:
 
 
 def parse_card(line: str) -> Card:
-    p_optional_whitespace: Parser = regex(r"\s*")
-    p_number: Parser = regex(r"\d+").map(int) << p_optional_whitespace
-
     card_id: Parser = string("Card") >> whitespace >> p_number.map(int)
 
     winning_number: Parser = p_number
