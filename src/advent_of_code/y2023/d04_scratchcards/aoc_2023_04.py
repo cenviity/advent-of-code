@@ -88,12 +88,14 @@ def solve_part2(cards: Sequence[Card]) -> int:
 
 
 def update_card_counts(card_counts: Counter[int], card: Card) -> Counter[int]:
-    return card_counts + Counter(
-        {
-            unique_card_won: card_counts[card.card_id]
-            for unique_card_won in card.unique_cards_won
-        }
-    )
+    card_copies: int = card_counts[card.card_id]
+    cards_won: Sequence[int] = card.unique_cards_won
+
+    return card_counts + count_cards_won(card_copies, cards_won)
+
+
+def count_cards_won(card_copies: int, cards_won: Sequence[int]) -> Counter[int]:
+    return Counter({card_won: card_copies for card_won in cards_won})
 
 
 if __name__ == "__main__":
