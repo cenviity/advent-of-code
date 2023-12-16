@@ -6,9 +6,9 @@ import pytest
 import advent_of_code.y2023.d05_if_you_give_a_seed_a_fertilizer.aoc_2023_05 as aoc
 from advent_of_code.y2023.d05_if_you_give_a_seed_a_fertilizer.types import (
     Almanac,
+    Category,
     Map,
     MapLine,
-    Seed,
 )
 
 PUZZLE_DIR: pathlib.Path = pathlib.Path(__file__).parent
@@ -35,19 +35,19 @@ def actual_input() -> Almanac:
 # @pytest.mark.skip(reason="Not implemented")
 def test_parse_example1(example1: Almanac) -> None:
     """Test that input is parsed properly."""
-    seeds: set[Seed] = {Seed(13), Seed(55), Seed(14), Seed(79)}
+    seeds: set[int] = {13, 55, 14, 79}
     maps: Sequence[Map] = [
         Map(
-            "seed",
-            "soil",
+            Category.seed,
+            Category.soil,
             [
                 MapLine(50, 98, 2),
                 MapLine(52, 50, 48),
             ],
         ),
         Map(
-            "soil",
-            "fertilizer",
+            Category.soil,
+            Category.fertilizer,
             [
                 MapLine(0, 15, 37),
                 MapLine(37, 52, 2),
@@ -55,8 +55,8 @@ def test_parse_example1(example1: Almanac) -> None:
             ],
         ),
         Map(
-            "fertilizer",
-            "water",
+            Category.fertilizer,
+            Category.water,
             [
                 MapLine(49, 53, 8),
                 MapLine(0, 11, 42),
@@ -65,16 +65,16 @@ def test_parse_example1(example1: Almanac) -> None:
             ],
         ),
         Map(
-            "water",
-            "light",
+            Category.water,
+            Category.light,
             [
                 MapLine(88, 18, 7),
                 MapLine(18, 25, 70),
             ],
         ),
         Map(
-            "light",
-            "temperature",
+            Category.light,
+            Category.temperature,
             [
                 MapLine(45, 77, 23),
                 MapLine(81, 45, 19),
@@ -82,16 +82,16 @@ def test_parse_example1(example1: Almanac) -> None:
             ],
         ),
         Map(
-            "temperature",
-            "humidity",
+            Category.temperature,
+            Category.humidity,
             [
                 MapLine(0, 69, 1),
                 MapLine(1, 0, 69),
             ],
         ),
         Map(
-            "humidity",
-            "location",
+            Category.humidity,
+            Category.location,
             [
                 MapLine(60, 56, 37),
                 MapLine(56, 93, 4),

@@ -5,19 +5,20 @@
 import pathlib
 import sys
 from collections.abc import Generator, Iterator
+from functools import reduce
 
 from parsy import Parser, generate
 
 from advent_of_code.utils.parsers import p_letters, p_number, symbol
 from advent_of_code.y2023.d05_if_you_give_a_seed_a_fertilizer.types import (
     Almanac,
+    Category,
     Map,
     MapLine,
-    Seed,
 )
 
 
-def solve_day(puzzle_input: str) -> Iterator[None]:
+def solve_day(puzzle_input: str) -> Iterator[int]:
     data = parse_input(puzzle_input)
 
     yield solve_part1(data)
@@ -39,9 +40,9 @@ def parse_almanac() -> Generator[Parser, None, Almanac]:
 
 
 @generate
-def parse_seeds() -> Generator[Parser, None, set[Seed]]:
+def parse_seeds() -> Generator[Parser, None, set[int]]:
     yield symbol("seeds:")
-    seeds = yield p_number.map(Seed).many()
+    seeds = yield p_number.many()
 
     return set(seeds)  # type: ignore
 
@@ -54,7 +55,7 @@ def parse_map() -> Generator[Parser, None, Map]:
     yield symbol("map:")
     lines = yield parse_map_line.many()
 
-    return Map(source, destination, lines)  # type: ignore
+    return Map(Category[source], Category[destination], lines)  # type: ignore
 
 
 @generate
@@ -66,11 +67,21 @@ def parse_map_line() -> Generator[Parser, None, MapLine]:
     return MapLine(destination_start, source_start, range_length)  # type: ignore
 
 
-def solve_part1(data: Almanac):
-    pass
+def solve_part1(almanac: Almanac) -> int:
+    result_seeds = reduce(
+        get_correspondences,
+        almanac.maps,
+        almanac.seeds,
+    )
+
+    return min(result_seeds)
 
 
-def solve_part2(data: Almanac):
+def get_correspondences(src: set[int], map: Map) -> set[int]:
+    return {map.destination(_src) for _src in src}
+
+
+def solve_part2(almanac: Almanac):
     pass
 
 
@@ -79,7 +90,7 @@ if __name__ == "__main__":
         print(f"{path}:")
 
         puzzle_input: str = pathlib.Path(path).read_text().strip()
-        solutions: Iterator[None] = solve_day(puzzle_input)
+        solutions: Iterator[int] = solve_day(puzzle_input)
 
         for solution in solutions:
             print(str(solution))
