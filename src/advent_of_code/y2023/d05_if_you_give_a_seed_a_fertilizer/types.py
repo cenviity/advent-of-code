@@ -36,10 +36,6 @@ class MapLine:
             range(self.source_start, self.source_start + self.range),
             range(self.destination_start, self.destination_start + self.range),
         )
-        return (
-            (self.source_start + i, self.destination_start + i)
-            for i in range(self.range)
-        )
 
 
 @dataclass
