@@ -68,13 +68,9 @@ def parse_correspondence() -> Generator[Parser, None, Correspondence]:
 
 
 def solve_part1(almanac: Almanac) -> int:
-    result_seeds = reduce(
-        get_destinations,
-        almanac.maps,
-        almanac.seeds,
-    )
+    results = reduce(get_destinations, almanac.maps, almanac.seeds)
 
-    return min(result_seeds)
+    return min(results)
 
 
 def get_destinations(sources: set[int], map: Map) -> set[int]:
