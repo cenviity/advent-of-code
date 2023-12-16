@@ -51,9 +51,6 @@ class Map:
     @property
     def correspondences(self) -> Sequence[Correspondence]:
         return [line.correspondence for line in self.lines]
-        # all_items = (line.correspondence for line in self.lines)
-
-        # return chain.from_iterable(all_items)
 
     def destination(self, source: int) -> int:
         for correspondence in self.correspondences:
