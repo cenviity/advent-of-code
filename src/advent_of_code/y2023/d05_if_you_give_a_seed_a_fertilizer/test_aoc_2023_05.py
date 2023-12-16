@@ -7,8 +7,8 @@ import advent_of_code.y2023.d05_if_you_give_a_seed_a_fertilizer.aoc_2023_05 as a
 from advent_of_code.y2023.d05_if_you_give_a_seed_a_fertilizer.types import (
     Almanac,
     Category,
+    Correspondence,
     Map,
-    MapLine,
 )
 
 PUZZLE_DIR: pathlib.Path = pathlib.Path(__file__).parent
@@ -41,60 +41,60 @@ def test_parse_example1(example1: Almanac) -> None:
             Category.seed,
             Category.soil,
             [
-                MapLine(50, 98, 2),
-                MapLine(52, 50, 48),
+                Correspondence(50, 98, 2),
+                Correspondence(52, 50, 48),
             ],
         ),
         Map(
             Category.soil,
             Category.fertilizer,
             [
-                MapLine(0, 15, 37),
-                MapLine(37, 52, 2),
-                MapLine(39, 0, 15),
+                Correspondence(0, 15, 37),
+                Correspondence(37, 52, 2),
+                Correspondence(39, 0, 15),
             ],
         ),
         Map(
             Category.fertilizer,
             Category.water,
             [
-                MapLine(49, 53, 8),
-                MapLine(0, 11, 42),
-                MapLine(42, 0, 7),
-                MapLine(57, 7, 4),
+                Correspondence(49, 53, 8),
+                Correspondence(0, 11, 42),
+                Correspondence(42, 0, 7),
+                Correspondence(57, 7, 4),
             ],
         ),
         Map(
             Category.water,
             Category.light,
             [
-                MapLine(88, 18, 7),
-                MapLine(18, 25, 70),
+                Correspondence(88, 18, 7),
+                Correspondence(18, 25, 70),
             ],
         ),
         Map(
             Category.light,
             Category.temperature,
             [
-                MapLine(45, 77, 23),
-                MapLine(81, 45, 19),
-                MapLine(68, 64, 13),
+                Correspondence(45, 77, 23),
+                Correspondence(81, 45, 19),
+                Correspondence(68, 64, 13),
             ],
         ),
         Map(
             Category.temperature,
             Category.humidity,
             [
-                MapLine(0, 69, 1),
-                MapLine(1, 0, 69),
+                Correspondence(0, 69, 1),
+                Correspondence(1, 0, 69),
             ],
         ),
         Map(
             Category.humidity,
             Category.location,
             [
-                MapLine(60, 56, 37),
-                MapLine(56, 93, 4),
+                Correspondence(60, 56, 37),
+                Correspondence(56, 93, 4),
             ],
         ),
     ]

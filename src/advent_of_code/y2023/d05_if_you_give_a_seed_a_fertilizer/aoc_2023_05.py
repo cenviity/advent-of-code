@@ -13,8 +13,8 @@ from advent_of_code.utils.parsers import p_letters, p_number, symbol
 from advent_of_code.y2023.d05_if_you_give_a_seed_a_fertilizer.types import (
     Almanac,
     Category,
+    Correspondence,
     Map,
-    MapLine,
 )
 
 
@@ -53,23 +53,23 @@ def parse_map() -> Generator[Parser, None, Map]:
     yield symbol("-to-")
     destination = yield p_letters
     yield symbol("map:")
-    lines = yield parse_map_line.many()
+    correspondences = yield parse_correspondence.many()
 
-    return Map(Category[source], Category[destination], lines)  # type: ignore
+    return Map(Category[source], Category[destination], correspondences)  # type: ignore
 
 
 @generate
-def parse_map_line() -> Generator[Parser, None, MapLine]:
+def parse_correspondence() -> Generator[Parser, None, Correspondence]:
     destination_start = yield p_number
     source_start = yield p_number
-    range_length = yield p_number
+    range = yield p_number
 
-    return MapLine(destination_start, source_start, range_length)  # type: ignore
+    return Correspondence(destination_start, source_start, range)  # type: ignore
 
 
 def solve_part1(almanac: Almanac) -> int:
     result_seeds = reduce(
-        get_correspondences,
+        get_destinations,
         almanac.maps,
         almanac.seeds,
     )
@@ -77,8 +77,8 @@ def solve_part1(almanac: Almanac) -> int:
     return min(result_seeds)
 
 
-def get_correspondences(src: set[int], map: Map) -> set[int]:
-    return {map.destination(_src) for _src in src}
+def get_destinations(sources: set[int], map: Map) -> set[int]:
+    return {map.destination(source) for source in sources}
 
 
 def solve_part2(almanac: Almanac):
