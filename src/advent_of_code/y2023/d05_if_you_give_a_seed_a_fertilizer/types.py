@@ -48,21 +48,17 @@ class Map:
     def correspondences(self) -> Sequence[Correspondence]:
         return [line.correspondence for line in self.lines]
 
-    def destination(self, source: int) -> int:
+    def destination(self, src: int) -> int:
         for correspondence in self.correspondences:
-            if source in correspondence.source:
-                return source - correspondence.source[0] + correspondence.destination[0]
-        return source
+            if src in correspondence.source:
+                return src - correspondence.source[0] + correspondence.destination[0]
+        return src
 
-    def source(self, destination: int) -> int:
+    def source(self, dst: int) -> int:
         for correspondence in self.correspondences:
-            if destination in correspondence.source:
-                return (
-                    destination
-                    - correspondence.source[0]
-                    + correspondence.destination[0]
-                )
-        return destination
+            if dst in correspondence.source:
+                return dst - correspondence.source[0] + correspondence.destination[0]
+        return dst
 
 
 @dataclass
