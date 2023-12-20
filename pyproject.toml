@@ -6,7 +6,7 @@ authors = ["Vincent Ging Ho Yim <cenviity@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 advent-of-code-data = "^2.0.1"
 parsy = "^2.1"
 
