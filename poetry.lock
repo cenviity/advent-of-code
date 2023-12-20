@@ -23,13 +23,13 @@ nb = ["IPython", "jupyter-server"]
 
 [[package]]
 name = "aocd-example-parser"
-version = "2023.12.10"
+version = "2023.12.17"
 description = "Implementation of example parser plugins for advent-of-code-data"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "aocd_example_parser-2023.12.10-py3-none-any.whl", hash = "sha256:401bbad0429f2333d973e7e9862cc6909964e12ccb9076b8777b5bccbb09098d"},
-    {file = "aocd_example_parser-2023.12.10.tar.gz", hash = "sha256:48b760f2fe8e6c0f3bf55cb2969d825db29d6812d2bfc44c1e4464d87f750c22"},
+    {file = "aocd_example_parser-2023.12.17-py3-none-any.whl", hash = "sha256:ebdc7f0612803c91c2759cbf5be0608ca0d6660dab8f3231fdca1418fa585665"},
+    {file = "aocd_example_parser-2023.12.17.tar.gz", hash = "sha256:40c245c83b070529b7368257aa9bb3a68d8ba0b8ca139e1b620527ad681740e2"},
 ]
 
 [[package]]
@@ -180,5 +180,5 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.11"
-content-hash = "de73468db28a94ddc495b3b594cd6f322bdf0ad3869238be3153353ba1cb491e"
+python-versions = "^3.12"
+content-hash = "decd3507c4ea2159cc55d39cfabb3991776be1969ca5b0999becc01a3e118fa3"
