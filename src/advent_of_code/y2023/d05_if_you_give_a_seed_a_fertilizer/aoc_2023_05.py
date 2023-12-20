@@ -26,9 +26,7 @@ def solve_day(puzzle_input: str) -> Iterator[int]:
 
 
 def parse_input(almanac: str) -> Almanac:
-    result = parse_almanac.parse(almanac)
-
-    return result
+    return parse_almanac.parse(almanac)
 
 
 @generate
